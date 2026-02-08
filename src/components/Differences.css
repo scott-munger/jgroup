@@ -1,0 +1,132 @@
+.differences {
+  margin-top: 40px;
+  height: 600px;
+  background-color: #f5f5f5;
+  padding: var(--spacing-3xl) var(--spacing-md);
+}
+
+.differences-container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.differences-title {
+  font-size: 32px;
+  font-weight: 400;
+  color: var(--text-primary);
+  text-align: center;
+  margin-bottom: var(--spacing-2xl);
+  line-height: 1.3;
+}
+
+.differences-scroll {
+  display: flex;
+  gap: var(--spacing-lg);
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding-bottom: var(--spacing-sm);
+}
+
+.differences-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.difference-card {
+  min-width: 280px;
+  max-width: 280px;
+  background-color: white;
+  border-radius: var(--border-radius);
+  padding: var(--spacing-xl);
+  text-align: center;
+  box-shadow: var(--shadow-md);
+  scroll-snap-align: start;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.difference-card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-4px);
+}
+
+.difference-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: var(--spacing-lg);
+  color: var(--color-primary);
+}
+
+.difference-icon img {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+}
+
+.difference-card-title {
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-md);
+}
+
+.difference-card-description {
+  font-size: 15px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+@media (min-width: 768px) {
+  .differences {
+    padding: var(--spacing-4xl) var(--spacing-lg);
+  }
+
+  .differences-title {
+    font-size: 40px;
+    margin-bottom: var(--spacing-3xl);
+  }
+
+  .difference-card {
+    min-width: 300px;
+    max-width: 300px;
+    padding: var(--spacing-xl);
+  }
+
+  .difference-card-title {
+    font-size: 24px;
+  }
+
+  .difference-card-description {
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .differences {
+    height: 800px;
+    padding: var(--spacing-4xl) var(--spacing-xl);
+  }
+
+  .differences-container {
+    max-width: 1600px;
+  }
+
+  .differences-title {
+    font-size: 48px;
+    margin-bottom: var(--spacing-4xl);
+  }
+
+  .differences-scroll {
+    gap: var(--spacing-2xl);
+    padding: var(--spacing-lg) 0;
+  }
+
+  .difference-card {
+    min-width: 360px;
+    max-width: 360px;
+    padding: var(--spacing-2xl);
+  }
+}
