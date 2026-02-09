@@ -7,6 +7,7 @@ import './Store.css'
 function Store() {
   const { addToCart, getCartCount } = useCart()
   const [searchTerm, setSearchTerm] = useState('')
+  const [membershipModal, setMembershipModal] = useState(null)
 
   const products = [
     {
@@ -67,6 +68,18 @@ function Store() {
     addToCart(product)
   }
 
+  const calculatePriceWithMembership = (oldPrice, discountPercent) => {
+    return Math.round(oldPrice * (1 - discountPercent / 100))
+  }
+
+  const openMembershipModal = (product) => {
+    setMembershipModal(product)
+  }
+
+  const closeMembershipModal = () => {
+    setMembershipModal(null)
+  }
+
 
   return (
     <div className="store-page">
@@ -102,7 +115,6 @@ function Store() {
                 key={product.id} 
                 className="product-card card-visible"
               >
-              <div className="discount-badge">Réduction de {product.discount}%</div>
               <div className="product-image">
                 <img 
                   src={product.image} 
@@ -112,6 +124,12 @@ function Store() {
                     e.target.nextSibling.style.display = 'flex';
                   }}
                 />
+                <div 
+                  className="membership-badge"
+                  onClick={() => openMembershipModal(product)}
+                >
+                  Voir le prix avec membership
+                </div>
                 <div className="product-image-placeholder" style={{display: 'none'}}>
                   <div className="rice-bag">
                     <div className="rice-brand">TCHAKO</div>
@@ -128,12 +146,14 @@ function Store() {
                   <span className="current-price">{product.price.toLocaleString()} Gdes</span>
                   <span className="old-price">{product.oldPrice.toLocaleString()} Gdes</span>
                 </div>
-                <button 
-                  className="btn-add-cart"
-                  onClick={() => handleAddToCart(product)}
-                >
-                  + au panier
-                </button>
+                <div className="product-actions">
+                  <button 
+                    className="btn-add-cart"
+                    onClick={() => handleAddToCart(product)}
+                  >
+                    + au panier
+                  </button>
+                </div>
               </div>
             </div>
             ))
@@ -144,6 +164,60 @@ function Store() {
           )}
         </div>
       </div>
+
+      {membershipModal && (
+        <div className="modal-overlay" onClick={closeMembershipModal}>
+          <div className="modal-content membership-modal-content" onClick={(e) => e.stopPropagation()}>
+            <button className="modal-close" onClick={closeMembershipModal}>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </button>
+            <div className="membership-modal-header">
+              <h2 className="membership-modal-title">Prix avec Membership</h2>
+              <p className="membership-modal-subtitle">{membershipModal.name}</p>
+            </div>
+            <div className="membership-modal-body">
+              <div className="membership-price-card gold">
+                <div className="membership-card-header">
+                  <span className="membership-card-label">Gold</span>
+                  <span className="membership-card-discount">25%</span>
+                </div>
+                <div className="membership-card-price">
+                  {calculatePriceWithMembership(membershipModal.oldPrice, 25).toLocaleString()} Gdes
+                </div>
+                <div className="membership-card-old-price">
+                  {membershipModal.oldPrice.toLocaleString()} Gdes
+                </div>
+              </div>
+              <div className="membership-price-card silver">
+                <div className="membership-card-header">
+                  <span className="membership-card-label">Silver</span>
+                  <span className="membership-card-discount">20%</span>
+                </div>
+                <div className="membership-card-price">
+                  {calculatePriceWithMembership(membershipModal.oldPrice, 20).toLocaleString()} Gdes
+                </div>
+                <div className="membership-card-old-price">
+                  {membershipModal.oldPrice.toLocaleString()} Gdes
+                </div>
+              </div>
+              <div className="membership-price-card bronze">
+                <div className="membership-card-header">
+                  <span className="membership-card-label">Bronze</span>
+                  <span className="membership-card-discount">15%</span>
+                </div>
+                <div className="membership-card-price">
+                  {calculatePriceWithMembership(membershipModal.oldPrice, 15).toLocaleString()} Gdes
+                </div>
+                <div className="membership-card-old-price">
+                  {membershipModal.oldPrice.toLocaleString()} Gdes
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

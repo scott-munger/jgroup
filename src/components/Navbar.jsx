@@ -80,6 +80,15 @@ function Navbar({ isOpen: externalIsOpen, onClose }) {
           </li>
           <li>
             <Link 
+              to="/equipment" 
+              className={`navbar-link ${isActive('/equipment') ? 'active' : ''}`}
+              onClick={closeMenu}
+            >
+              Matériels & Engins Lourds
+            </Link>
+          </li>
+          <li>
+            <Link 
               to="/profile" 
               className={`navbar-link ${isActive('/profile') ? 'active' : ''}`}
               onClick={closeMenu}

@@ -246,7 +246,7 @@
 .product-card {
   background-color: white;
   border-radius: var(--border-radius);
-  padding: var(--spacing-md);
+  padding: var(--spacing-sm);
   box-shadow: var(--shadow-sm);
   position: relative;
   overflow: hidden;
@@ -254,6 +254,9 @@
   opacity: 1;
   transform: translateY(0);
   will-change: opacity, transform;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .product-card.card-visible {
@@ -291,10 +294,33 @@
   z-index: 2;
 }
 
+.membership-badge {
+  position: absolute;
+  top: var(--spacing-sm);
+  left: var(--spacing-sm);
+  background-color: rgba(86, 48, 255, 0.95);
+  color: white;
+  font-size: 10px;
+  font-weight: 400;
+  padding: 4px var(--spacing-sm);
+  border-radius: 6px;
+  z-index: 2;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+  white-space: nowrap;
+  backdrop-filter: blur(4px);
+}
+
+.membership-badge:hover {
+  background-color: rgba(86, 48, 255, 1);
+  transform: scale(1.02);
+}
+
 .product-image {
   width: 100%;
   aspect-ratio: 1;
-  margin-bottom: var(--spacing-md);
+  margin-bottom: var(--spacing-sm);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -302,6 +328,12 @@
   overflow: hidden;
   border-radius: var(--border-radius);
   background-color: var(--bg-main);
+}
+
+.product-image .membership-badge {
+  position: absolute;
+  top: var(--spacing-sm);
+  left: var(--spacing-sm);
 }
 
 .product-image img {
@@ -363,19 +395,30 @@
 .product-info {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-sm);
+  gap: 0;
+  flex: 1;
+  justify-content: space-between;
 }
 
 .product-name {
   font-size: 18px;
   font-weight: 400;
   color: var(--text-primary);
+  margin-bottom: -4px;
+  line-height: 1.1;
+  min-height: 44px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .product-price {
   display: flex;
   align-items: center;
   gap: var(--spacing-sm);
+  margin-top: -2px;
 }
 
 .current-price {
@@ -390,17 +433,24 @@
   text-decoration: line-through;
 }
 
+.product-actions {
+  display: flex;
+  gap: var(--spacing-sm);
+  margin-top: auto;
+  padding-top: var(--spacing-sm);
+}
+
 .btn-add-cart {
   width: 100%;
   background-color: var(--color-primary);
   color: white;
   border: none;
-  padding: 10px var(--spacing-md);
+  padding: 8px var(--spacing-sm);
   border-radius: var(--border-radius);
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 400;
   cursor: pointer;
-  min-height: 44px;
+  min-height: 36px;
   transition: all 0.2s ease;
 }
 
@@ -421,9 +471,9 @@
   
   .store-search {
     margin: -60px auto var(--spacing-lg);
-    padding: 0 var(--spacing-md);
+    padding: 0 var(--spacing-sm);
     flex-direction: row;
-    gap: 8px;
+    gap: var(--spacing-sm);
     max-width: 100%;
     box-sizing: border-box;
     align-items: center;
@@ -468,15 +518,23 @@
   }
   
   .product-info {
-    gap: var(--spacing-xs);
+    gap: 0;
   }
   
   .product-name {
     font-size: 18px;
-    margin-bottom: var(--spacing-xs);
+    min-height: 44px;
+    margin-bottom: -4px;
+    line-height: 1.1;
+  }
+  
+  .product-actions {
+    margin-top: auto;
+    padding-top: var(--spacing-sm);
   }
   
   .product-price {
+    margin-top: -2px;
     margin-bottom: var(--spacing-xs);
   }
   
@@ -498,21 +556,21 @@
 @media (min-width: 480px) {
   .store-search {
     flex-direction: row;
-    margin: -100px auto var(--spacing-lg);
+    margin: -60px auto var(--spacing-lg);
     padding: 0 var(--spacing-md);
-    max-width: 100%;
+    max-width: 800px;
   }
 
   .search-input {
-    font-size: 15px;
-    padding: 14px var(--spacing-lg);
-    min-height: 48px;
+    font-size: 13px;
+    padding: 10px 12px;
+    min-height: 40px;
   }
 
   .btn-find {
-    font-size: 14px;
-    padding: 14px var(--spacing-md);
-    min-height: 48px;
+    font-size: 12px;
+    padding: 10px 14px;
+    min-height: 40px;
     width: auto;
   }
 
@@ -534,9 +592,9 @@
   }
 
   .store-search {
-    margin: -60px auto var(--spacing-xl);
+    margin: -100px auto var(--spacing-xl);
     padding: 0 var(--spacing-lg);
-    max-width: 100%;
+    max-width: 1000px;
   }
 
   .store-content {
@@ -549,7 +607,7 @@
   }
 
   .product-card {
-    padding: var(--spacing-lg);
+    padding: var(--spacing-sm);
   }
 }
 
@@ -582,9 +640,9 @@
   }
 
   .store-search {
-    margin: -150px auto var(--spacing-xl);
-    padding: 0 var(--spacing-xl);
-    max-width: 1400px;
+    margin: -100px auto var(--spacing-xl);
+    padding: 0 var(--spacing-lg);
+    max-width: 1000px;
     width: 100%;
     flex-direction: row;
   }
@@ -602,6 +660,146 @@
   }
 
   .product-card {
-    padding: var(--spacing-lg);
+    padding: var(--spacing-md);
+  }
+}
+
+/* Membership Modal Styles */
+.membership-modal-content {
+  max-width: 240px;
+}
+
+.membership-modal-header {
+  padding: var(--spacing-md);
+  border-bottom: 1px solid var(--color-neutral);
+  text-align: center;
+}
+
+.membership-modal-title {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--text-primary);
+  margin: 0 0 4px 0;
+}
+
+.membership-modal-subtitle {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.membership-modal-body {
+  padding: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.membership-price-card {
+  border-radius: var(--border-radius);
+  padding: var(--spacing-sm);
+  border: 2px solid var(--color-neutral);
+  transition: all 0.2s ease;
+}
+
+.membership-price-card.gold {
+  border-color: #FFD700;
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(255, 215, 0, 0.05) 100%);
+}
+
+.membership-price-card.silver {
+  border-color: #C0C0C0;
+  background: linear-gradient(135deg, rgba(192, 192, 192, 0.1) 0%, rgba(192, 192, 192, 0.05) 100%);
+}
+
+.membership-price-card.bronze {
+  border-color: #CD7F32;
+  background: linear-gradient(135deg, rgba(205, 127, 50, 0.1) 0%, rgba(205, 127, 50, 0.05) 100%);
+}
+
+.membership-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-xs);
+}
+
+.membership-card-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.membership-card-discount {
+  background-color: var(--color-primary);
+  color: white;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.membership-card-price {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--color-primary);
+  margin-bottom: 2px;
+}
+
+.membership-card-old-price {
+  font-size: 12px;
+  color: var(--text-secondary);
+  text-decoration: line-through;
+}
+
+@media (max-width: 480px) {
+  .membership-modal-content {
+    max-width: calc(100% - 32px);
+    margin: 20px auto;
+    width: 100%;
+  }
+
+  .membership-modal-header {
+    padding: var(--spacing-sm);
+  }
+
+  .membership-modal-title {
+    font-size: 14px;
+    margin: 0 0 2px 0;
+  }
+
+  .membership-modal-subtitle {
+    font-size: 11px;
+  }
+
+  .membership-modal-body {
+    padding: var(--spacing-sm);
+    gap: var(--spacing-xs);
+  }
+
+  .membership-price-card {
+    padding: var(--spacing-xs);
+  }
+
+  .membership-card-header {
+    margin-bottom: 4px;
+  }
+
+  .membership-card-label {
+    font-size: 12px;
+  }
+
+  .membership-card-discount {
+    padding: 2px 6px;
+    font-size: 10px;
+  }
+
+  .membership-card-price {
+    font-size: 16px;
+    margin-bottom: 1px;
+  }
+
+  .membership-card-old-price {
+    font-size: 11px;
   }
 }

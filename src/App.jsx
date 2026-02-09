@@ -4,6 +4,7 @@ import { CartProvider } from './context/CartContext'
 import Home from './pages/Home'
 import Profile from './pages/Profile'
 import Store from './pages/Store'
+import Equipment from './pages/Equipment'
 import ConstructionOrder from './pages/ConstructionOrder'
 import CarburantOrder from './pages/CarburantOrder'
 import AssainissementOrder from './pages/AssainissementOrder'
@@ -16,11 +17,17 @@ import './App.css'
 function App() {
   return (
     <CartProvider>
-      <Router>
+      <Router
+        future={{
+          v7_startTransition: true,
+          v7_relativeSplatPath: true
+        }}
+      >
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/store" element={<Store />} />
+          <Route path="/equipment" element={<Equipment />} />
           <Route path="/construction" element={<ConstructionOrder />} />
           <Route path="/carburant" element={<CarburantOrder />} />
           <Route path="/assainissement" element={<AssainissementOrder />} />

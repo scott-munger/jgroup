@@ -15,6 +15,7 @@ function Footer() {
               <li><Link to="/carburant" className="footer-link">Carburant</Link></li>
               <li><Link to="/assainissement" className="footer-link">Assainissement</Link></li>
               <li><Link to="/store" className="footer-link">Provision alimentaire</Link></li>
+              <li><Link to="/equipment" className="footer-link">Matériels & Engins Lourds</Link></li>
             </ul>
           </div>
         </div>

@@ -93,41 +93,459 @@
   width: 100%;
   flex: 1;
   max-width: 100%;
+  position: relative;
+  min-height: 380px;
+  overflow: visible;
 }
 
-.feature-cards .gold-card {
+.membership-cards-stack {
+  position: relative;
   width: 100%;
   max-width: 420px;
-  height: 260px;
-  padding: 32px;
-  margin-bottom: 0;
+  height: 400px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  overflow: visible;
 }
+
+.membership-card {
+  position: absolute;
+  width: calc(100% - 40px);
+  max-width: 380px;
+  height: 260px;
+  border-radius: 16px;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  will-change: transform;
+}
+
+.membership-card:hover {
+  transform: translateY(-10px) rotate(0deg) !important;
+  z-index: 10 !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25), 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.gold-card {
+  background: linear-gradient(135deg, #f6d365 0%, #fda085 50%, #ff9a56 100%);
+  transform: translateX(-15px) translateY(0) rotate(-4deg);
+  z-index: 3;
+  left: 20px;
+  top: 0;
+}
+
+.black-card {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
+  transform: translateX(0) translateY(20px) rotate(1deg);
+  z-index: 2;
+  left: 20px;
+  top: 0;
+}
+
+.bronze-card {
+  background: linear-gradient(135deg, #d4a574 0%, #c97d60 50%, #b8654f 100%);
+  transform: translateX(15px) translateY(40px) rotate(4deg);
+  z-index: 1;
+  left: 20px;
+  top: 0;
+}
+
+.card-type {
+  position: absolute;
+  top: 28px;
+  left: 28px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  opacity: 0.95;
+  text-transform: uppercase;
+}
+
+.card-brand {
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  opacity: 0.95;
+  position: absolute;
+  top: 28px;
+  right: 28px;
+  margin: 0;
+}
+
+.card-name {
+  font-size: 24px;
+  font-weight: 400;
+  letter-spacing: 0.3px;
+  position: absolute;
+  top: 70px;
+  left: 28px;
+  right: 28px;
+  margin: 0;
+  line-height: 1.3;
+  padding-left: 0;
+}
+
+.card-barcode {
+  position: absolute;
+  bottom: 80px;
+  left: 28px;
+  right: 28px;
+  padding: 6px 8px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+}
+
+.barcode-svg {
+  width: 100%;
+  height: 35px;
+  max-width: 100%;
+}
+
+.barcode-svg circle {
+  display: none !important;
+}
+
+.barcode-svg ellipse {
+  display: none !important;
+}
+
+.card-bottom-right {
+  position: absolute;
+  bottom: 28px;
+  right: 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+@keyframes bronzeToFront {
+  0% {
+    transform: translateX(15px) translateY(40px) rotate(4deg);
+    z-index: 1;
+  }
+  100% {
+    transform: translateX(-15px) translateY(0) rotate(-4deg);
+    z-index: 3;
+  }
+}
+
+@keyframes bronzeToMiddle {
+  0% {
+    transform: translateX(-15px) translateY(0) rotate(-4deg);
+    z-index: 3;
+  }
+  100% {
+    transform: translateX(0) translateY(20px) rotate(1deg);
+    z-index: 2;
+  }
+}
+
+@keyframes bronzeToBack {
+  0% {
+    transform: translateX(0) translateY(20px) rotate(1deg);
+    z-index: 2;
+  }
+  100% {
+    transform: translateX(15px) translateY(40px) rotate(4deg);
+    z-index: 1;
+  }
+}
+
+@keyframes blackToFront {
+  0% {
+    transform: translateX(0) translateY(20px) rotate(1deg);
+    z-index: 2;
+  }
+  100% {
+    transform: translateX(-15px) translateY(0) rotate(-4deg);
+    z-index: 3;
+  }
+}
+
+@keyframes blackToBack {
+  0% {
+    transform: translateX(-15px) translateY(0) rotate(-4deg);
+    z-index: 3;
+  }
+  100% {
+    transform: translateX(15px) translateY(40px) rotate(4deg);
+    z-index: 1;
+  }
+}
+
+@keyframes goldToMiddle {
+  0% {
+    transform: translateX(-15px) translateY(0) rotate(-4deg);
+    z-index: 3;
+  }
+  100% {
+    transform: translateX(0) translateY(20px) rotate(1deg);
+    z-index: 2;
+  }
+}
+
+@keyframes goldToBack {
+  0% {
+    transform: translateX(0) translateY(20px) rotate(1deg);
+    z-index: 2;
+  }
+  100% {
+    transform: translateX(15px) translateY(40px) rotate(4deg);
+    z-index: 1;
+  }
+}
+
+.bronze-card.animate-to-front {
+  animation: bronzeToFront 1.2s ease-in-out forwards;
+}
+
+.bronze-card.animate-to-back {
+  animation: bronzeToBack 1.2s ease-in-out forwards;
+}
+
+.black-card.animate-to-front {
+  animation: blackToFront 1.2s ease-in-out forwards;
+}
+
+.black-card.animate-to-back {
+  animation: blackToBack 1.2s ease-in-out forwards;
+}
+
+.gold-card.animate-to-front {
+  animation: none;
+}
+
+.gold-card.animate-to-back {
+  animation: goldToBack 1.2s ease-in-out forwards;
+}
+
+.card-discount {
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.3px;
+  opacity: 0.95;
+}
+
 
 @media (min-width: 768px) {
   .feature-cards {
     flex: 0 0 45%;
     max-width: 45%;
+    min-height: 420px;
   }
   
-  .feature-cards .gold-card {
+  .membership-cards-stack {
     max-width: 450px;
+    height: 440px;
+    padding: 50px 20px;
+  }
+  
+  .membership-card {
+    max-width: 410px;
     height: 280px;
     padding: 32px;
+    width: calc(100% - 40px);
+  }
+  
+  .gold-card {
+    transform: translateX(-20px) translateY(0) rotate(-5deg);
+    left: 20px;
+  }
+  
+  .black-card {
+    transform: translateX(0) translateY(25px) rotate(1.5deg);
+    left: 20px;
+  }
+  
+  .bronze-card {
+    transform: translateX(20px) translateY(50px) rotate(5deg);
+    left: 20px;
+  }
+  
+  .card-type {
+    top: 32px;
+    left: 32px;
+    font-size: 13px;
+  }
+  
+  .card-name {
+    font-size: 28px;
+    top: 80px;
+  }
+  
+  .card-brand {
+    font-size: 15px;
+    top: 32px;
+    right: 32px;
+  }
+  
+  .card-discount {
+    font-size: 13px;
+  }
+  
+  .card-barcode {
+    bottom: 90px;
+    height: 45px;
+  }
+  
+  .barcode-svg {
+    height: 40px;
+  }
+  
+  .card-bottom-right {
+    bottom: 32px;
+    right: 32px;
   }
 }
 
 @media (min-width: 1024px) {
-  .feature-cards .gold-card {
+  .feature-cards {
+    min-height: 460px;
+  }
+  
+  .membership-cards-stack {
     max-width: 500px;
+    height: 480px;
+    padding: 60px 20px;
+  }
+  
+  .membership-card {
+    max-width: 460px;
     height: 300px;
-    padding: 32px;
+    padding: 36px;
+    width: calc(100% - 40px);
+  }
+  
+  .gold-card {
+    transform: translateX(-25px) translateY(0) rotate(-6deg);
+    left: 20px;
+  }
+  
+  .black-card {
+    transform: translateX(0) translateY(30px) rotate(2deg);
+    left: 20px;
+  }
+  
+  .bronze-card {
+    transform: translateX(25px) translateY(60px) rotate(6deg);
+    left: 20px;
+  }
+  
+  .card-type {
+    top: 36px;
+    left: 36px;
+    font-size: 14px;
+  }
+  
+  .card-name {
+    font-size: 32px;
+    top: 90px;
+  }
+  
+  .card-brand {
+    font-size: 16px;
+    top: 36px;
+    right: 36px;
+  }
+  
+  .card-discount {
+    font-size: 14px;
+  }
+  
+  .card-barcode {
+    bottom: 100px;
+    height: 50px;
+  }
+  
+  .barcode-svg {
+    height: 45px;
+  }
+  
+  .card-bottom-right {
+    bottom: 36px;
+    right: 36px;
   }
 }
 
-
-@media (min-width: 768px) {
-  .feature-card {
-    padding: 0;
+@media (max-width: 480px) {
+  .feature-cards {
+    min-height: 340px;
+    overflow: visible;
+  }
+  
+  .membership-cards-stack {
+    height: 360px;
+    max-width: 100%;
+    padding: 30px 10px;
+    overflow: visible;
+  }
+  
+  .membership-card {
+    max-width: calc(100% - 20px);
+    width: calc(100% - 20px);
+    height: 240px;
+    padding: 24px;
+  }
+  
+  .gold-card {
+    transform: translateX(-10px) translateY(0) rotate(-3deg);
+    left: 10px;
+  }
+  
+  .silver-card {
+    transform: translateX(0) translateY(15px) rotate(1deg);
+    left: 10px;
+  }
+  
+  .bronze-card {
+    transform: translateX(10px) translateY(30px) rotate(3deg);
+    left: 10px;
+  }
+  
+  .card-type {
+    top: 24px;
+    left: 24px;
+    font-size: 11px;
+  }
+  
+  .card-name {
+    font-size: 20px;
+    top: 60px;
+  }
+  
+  .card-brand {
+    font-size: 12px;
+    top: 24px;
+    right: 24px;
+  }
+  
+  .card-discount {
+    font-size: 11px;
+  }
+  
+  .card-barcode {
+    bottom: 75px;
+    height: 35px;
+    padding: 6px;
+  }
+  
+  .barcode-svg {
+    height: 30px;
+  }
+  
+  .card-bottom-right {
+    bottom: 24px;
+    right: 24px;
+    gap: 6px;
   }
 }
 
@@ -200,7 +618,6 @@
   justify-content: center;
   box-shadow: 0 2px 8px rgba(86, 48, 255, 0.3);
 }
-
 
 .btn-secondary {
   background: var(--color-primary);
@@ -338,10 +755,6 @@
   .profile-mockup-content {
     gap: var(--spacing-4xl);
     align-items: center;
-  }
-  
-  .feature-card {
-    padding: 0;
   }
 
   .benefit-item {

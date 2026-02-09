@@ -30,6 +30,12 @@ function Services() {
       description: 'Collecte et transport des déchets avec suivi des camions et validation client de la livraison.',
       image: '/assets_images/camions-ordures-ville-quebec-cueillette-ordures-menageres-camion-benne-ville-de-quebec-bacs-ordures-et-recyclage-ville-de-quebec-en-bord-de-ruebas-vert-bac-bleu-64630.avif',
       link: '/assainissement'
+    },
+    {
+      title: 'Matériels & Engins Lourds',
+      description: 'Location et vente de matériels de construction et engins lourds pour vos projets. Excavatrices, bulldozers, grues et plus.',
+      image: '/assets_images/construction.jpeg',
+      link: '/equipment'
     }
   ]
 

@@ -6,16 +6,26 @@ import './Header.css'
 
 function Header() {
   const [language, setLanguage] = useState('fr')
+  const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const location = useLocation()
   const { getCartCount } = useCart()
 
   const isActive = (path) => location.pathname === path
 
-  const toggleLanguage = () => {
-    setLanguage(language === 'fr' ? 'en' : 'fr')
+  const languages = [
+    { code: 'fr', name: 'Français', flag: '🇫🇷' },
+    { code: 'en', name: 'English', flag: '🇬🇧' },
+    { code: 'ht', name: 'Kreyòl', flag: '🇭🇹' }
+  ]
+
+  const handleLanguageChange = (langCode) => {
+    setLanguage(langCode)
+    setIsLanguageDropdownOpen(false)
     // TODO: Implement actual translation logic
   }
+
+  const currentLanguage = languages.find(lang => lang.code === language) || languages[0]
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen)
@@ -66,6 +76,12 @@ function Header() {
                 Assainissement
               </Link>
               <Link 
+                to="/equipment" 
+                className={`header-nav-link ${isActive('/equipment') ? 'active' : ''}`}
+              >
+                Matériels
+              </Link>
+              <Link 
                 to="/profile" 
                 className={`header-nav-link ${isActive('/profile') ? 'active' : ''}`}
               >
@@ -74,28 +90,44 @@ function Header() {
             </nav>
           </div>
           <div className="header-actions">
-            <button 
-              className="btn-language" 
-              onClick={toggleLanguage}
-              aria-label="Changer la langue"
-            >
-              {language === 'fr' ? (
-                <svg className="flag-icon" width="20" height="15" viewBox="0 0 20 15" fill="none">
-                  <rect width="20" height="5" fill="#002654"/>
-                  <rect y="5" width="20" height="5" fill="white"/>
-                  <rect y="10" width="20" height="5" fill="#ED2939"/>
+            <div className="language-dropdown-container">
+              <button 
+                className="btn-language" 
+                onClick={() => setIsLanguageDropdownOpen(!isLanguageDropdownOpen)}
+                aria-label="Changer la langue"
+              >
+                <span className="flag-emoji">{currentLanguage.flag}</span>
+                <span className="language-text">{currentLanguage.code.toUpperCase()}</span>
+                <svg 
+                  className={`dropdown-arrow ${isLanguageDropdownOpen ? 'open' : ''}`}
+                  width="12" 
+                  height="12" 
+                  viewBox="0 0 12 12" 
+                  fill="none"
+                >
+                  <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
-              ) : (
-                <svg className="flag-icon" width="20" height="15" viewBox="0 0 20 15" fill="none">
-                  <rect width="20" height="15" fill="#012169"/>
-                  <path d="M0 0L20 15M20 0L0 15" stroke="white" strokeWidth="2"/>
-                  <path d="M0 7.5L20 7.5M10 0L10 15" stroke="white" strokeWidth="2"/>
-                  <path d="M0 0L20 15M20 0L0 15" stroke="#C8102E" strokeWidth="1.2"/>
-                  <path d="M0 7.5L20 7.5M10 0L10 15" stroke="#C8102E" strokeWidth="1.2"/>
-                </svg>
+              </button>
+              {isLanguageDropdownOpen && (
+                <div className="language-dropdown">
+                  {languages.map((lang) => (
+                    <button
+                      key={lang.code}
+                      className={`language-option ${language === lang.code ? 'active' : ''}`}
+                      onClick={() => handleLanguageChange(lang.code)}
+                    >
+                      <span className="flag-emoji">{lang.flag}</span>
+                      <span className="language-name">{lang.name}</span>
+                      {language === lang.code && (
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                          <path d="M20 6L9 17L4 12" stroke="#5630FF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      )}
+                    </button>
+                  ))}
+                </div>
               )}
-              <span className="language-text">{language === 'fr' ? 'FR' : 'EN'}</span>
-            </button>
+            </div>
             <Link to="/cart" className="btn-cart-header">
               <img 
                 src="/icons/cart.svg" 
@@ -110,6 +142,12 @@ function Header() {
         </div>
       </header>
       <Navbar isOpen={isMenuOpen} onClose={closeMenu} />
+      {isLanguageDropdownOpen && (
+        <div 
+          className="dropdown-overlay" 
+          onClick={() => setIsLanguageDropdownOpen(false)}
+        />
+      )}
     </>
   )
 }
