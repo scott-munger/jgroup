@@ -512,40 +512,46 @@
   }
   
   .card-type {
-    top: 24px;
-    left: 24px;
-    font-size: 11px;
+    top: 20px;
+    left: 20px;
+    font-size: 10px;
+    letter-spacing: 0.5px;
   }
   
   .card-name {
-    font-size: 20px;
-    top: 60px;
+    font-size: 18px;
+    top: 55px;
+    line-height: 1.2;
   }
   
   .card-brand {
-    font-size: 12px;
-    top: 24px;
-    right: 24px;
+    font-size: 11px;
+    top: 20px;
+    right: 20px;
   }
   
   .card-discount {
-    font-size: 11px;
+    font-size: 10px;
   }
   
   .card-barcode {
-    bottom: 75px;
-    height: 35px;
-    padding: 6px;
+    bottom: 70px;
+    height: 30px;
+    padding: 4px 6px;
   }
   
   .barcode-svg {
-    height: 30px;
+    height: 25px;
   }
   
   .card-bottom-right {
-    bottom: 24px;
-    right: 24px;
-    gap: 6px;
+    bottom: 20px;
+    right: 20px;
+    gap: 4px;
+  }
+  
+  .membership-card {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.08);
   }
 }
 
