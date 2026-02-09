@@ -1,0 +1,146 @@
+<div class="cart-page">
+  <div class="cart-header">
+    <a href="/store" class="btn-back" data-route="/store">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M15 18L9 12L15 6" stroke="#5630FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+    <h1 class="cart-title">Panier</h1>
+    <button class="btn-clear" id="clear-cart-btn" style="display: none;">Vider</button>
+  </div>
+
+  <div class="cart-content" id="cart-content">
+    <!-- Cart items will be loaded here -->
+  </div>
+
+  <!-- Confirmation Modal -->
+  <div class="confirmation-overlay" id="confirmation-modal" style="display: none;">
+    <div class="confirmation-modal-content" onclick="event.stopPropagation()">
+      <div class="confirmation-icon">✓</div>
+      <h2 class="confirmation-title">Commande confirmée !</h2>
+      <p class="confirmation-message">
+        Votre commande a été passée avec succès. Nous vous contacterons bientôt pour la livraison.
+      </p>
+      <a href="/store" class="btn-confirmation" data-route="/store">Retour à la boutique</a>
+      <button class="btn-close-confirmation" onclick="closeConfirmation()">Fermer</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function initCartPage() {
+  renderCart()
+}
+
+function renderCart() {
+  const cart = cartManager.cart
+  const cartContent = document.getElementById('cart-content')
+  const clearBtn = document.getElementById('clear-cart-btn')
+
+  // Reset empty state layout
+  cartContent.classList.remove('cart-empty-state')
+
+  if (cart.length === 0) {
+    cartContent.innerHTML = `
+      <div class="cart-empty">
+        <div class="cart-empty-icon">🛒</div>
+        <h2>Votre panier est vide</h2>
+        <p>Ajoutez des produits depuis la boutique</p>
+        <a href="/store" class="btn-shop" data-route="/store">Aller à la boutique</a>
+      </div>
+    `
+    cartContent.classList.add('cart-empty-state')
+    clearBtn.style.display = 'none'
+    return
+  }
+
+  clearBtn.style.display = 'block'
+
+  const total = cartManager.getCartTotal()
+
+  cartContent.innerHTML = `
+    <div class="cart-items">
+      ${cart.map(item => `
+        <div class="cart-item" data-id="${item.id}" data-type="${item.type}">
+          <div class="cart-item-image">
+            <img src="${item.image || '../assets_images/rayonnages-palettes-entrepot-aliments-boissons-jot-l.1.1.avif'}" alt="${item.name}" />
+          </div>
+          <div class="cart-item-info">
+            <h3 class="cart-item-name">${item.name}</h3>
+            <div class="cart-item-price">${(item.price || item.pricePerHour || 0).toLocaleString()} Gdes</div>
+            <div class="cart-item-quantity">
+              <button class="quantity-btn" onclick="updateCartQuantity(${item.id}, '${item.type}', ${item.quantity - 1})">−</button>
+              <span class="quantity-value">${item.quantity}</span>
+              <button class="quantity-btn" onclick="updateCartQuantity(${item.id}, '${item.type}', ${item.quantity + 1})">+</button>
+            </div>
+          </div>
+          <div class="cart-item-total">
+            <div class="item-total-price">${((item.price || item.pricePerHour || 0) * item.quantity).toLocaleString()} Gdes</div>
+            <button class="btn-remove" onclick="removeFromCart(${item.id}, '${item.type}')">✕</button>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+    <div class="cart-summary">
+      <div class="summary-row">
+        <span>Sous-total</span>
+        <span>${total.toLocaleString()} Gdes</span>
+      </div>
+      <div class="summary-row">
+        <span>Total</span>
+        <span class="total-price">${total.toLocaleString()} Gdes</span>
+      </div>
+      <button class="btn-checkout" onclick="handleCheckout()">Passer la commande</button>
+    </div>
+  `
+}
+
+function updateCartQuantity(itemId, itemType, quantity) {
+  cartManager.updateQuantity(itemId, itemType, quantity)
+  renderCart()
+}
+
+function removeFromCart(itemId, itemType) {
+  cartManager.removeFromCart(itemId, itemType)
+  renderCart()
+}
+
+function handleCheckout() {
+  if (cartManager.cart.length === 0) return
+  
+  document.getElementById('confirmation-modal').style.display = 'flex'
+  cartManager.clearCart()
+  renderCart()
+}
+
+function closeConfirmation() {
+  document.getElementById('confirmation-modal').style.display = 'none'
+}
+
+// Clear cart button
+document.getElementById('clear-cart-btn')?.addEventListener('click', () => {
+  showClearCartConfirmation()
+})
+
+function showClearCartConfirmation() {
+  const modal = document.createElement('div')
+  modal.className = 'confirmation-overlay'
+  modal.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 10000;'
+  modal.innerHTML = `
+    <div class="confirmation-modal-content" style="background: white; padding: 24px; border-radius: 12px; max-width: 400px; width: 90%; text-align: center;">
+      <h3 style="margin: 0 0 16px 0; font-size: 18px; color: var(--text-primary);">Vider le panier ?</h3>
+      <p style="margin: 0 0 24px 0; color: var(--text-secondary);">Êtes-vous sûr de vouloir vider votre panier ?</p>
+      <div style="display: flex; gap: 12px; justify-content: center;">
+        <button onclick="this.closest('.confirmation-overlay').remove()" style="padding: 10px 20px; border: 2px solid var(--color-neutral); background: white; border-radius: 8px; cursor: pointer; color: var(--text-primary);">Annuler</button>
+        <button onclick="cartManager.clearCart(); renderCart(); this.closest('.confirmation-overlay').remove();" style="padding: 10px 20px; border: none; background: var(--color-primary); border-radius: 8px; cursor: pointer; color: white;">Vider</button>
+      </div>
+    </div>
+  `
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      modal.remove()
+    }
+  })
+  document.body.appendChild(modal)
+}
+</script>

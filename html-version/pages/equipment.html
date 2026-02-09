@@ -1,0 +1,843 @@
+<div class="equipment-page">
+  <div class="equipment-header">
+    <div class="equipment-header-bg"></div>
+    <div class="equipment-header-content">
+      <a href="/" class="btn-back" data-route="/">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M15 18L9 12L15 6" stroke="#5630FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+    <h1 class="equipment-title">Matériels & Engins Lourds</h1>
+  </div>
+
+  <div class="equipment-search">
+    <input 
+      type="text" 
+      class="search-input" 
+      id="equipment-search-input"
+      placeholder="Taper le nom du matériel recherché" 
+    />
+    <button class="btn-find" id="equipment-search-btn">Trouver</button>
+  </div>
+
+  <div class="equipment-content">
+    <div class="equipment-grid" id="equipment-grid">
+      <!-- Equipment will be loaded here -->
+    </div>
+  </div>
+
+  <!-- Equipment Details Modal -->
+  <div class="modal-overlay" id="equipment-modal" style="display: none;" onclick="closeEquipmentModal()">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeEquipmentModal()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="modal-header" id="equipment-modal-header">
+        <!-- Equipment details will be loaded here -->
+      </div>
+      <div id="equipment-modal-body"></div>
+    </div>
+  </div>
+
+  <!-- Rental Modal -->
+  <div class="modal-overlay" id="rental-modal" style="display: none;" onclick="closeRentalModal()">
+    <div class="modal-content rent-modal-content" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeRentalModal()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="rent-modal-header" id="rental-modal-header">
+        <!-- Rental form will be loaded here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Membership Modal -->
+  <div class="modal-overlay" id="equipment-membership-modal" style="display: none;" onclick="closeEquipmentMembershipModal()">
+    <div class="modal-content membership-modal-content" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeEquipmentMembershipModal()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="membership-modal-header">
+        <h2 class="membership-modal-title">Prix avec Membership</h2>
+        <p class="membership-modal-subtitle" id="equipment-membership-subtitle">Choisissez votre niveau de membership</p>
+      </div>
+      <div class="membership-modal-body" id="equipment-membership-prices">
+        <!-- Membership prices will be loaded here -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function initEquipmentPage() {
+  const equipment = [
+    {
+      id: 1,
+      name: 'Excavatrice CAT 320',
+      price: 250000,
+      oldPrice: 300000,
+      discount: 17,
+      pricePerHour: 25000,
+      image: '/assets_images/Excavatrice CAT 320.jpeg',
+      description: 'Excavatrice hydraulique de 20 tonnes, idéale pour les travaux de terrassement et de creusement.',
+      specifications: {
+        poids: '20 tonnes',
+        puissance: '110 kW',
+        capacite: '1.2 m³',
+        annee: '2022',
+        etat: 'Excellent'
+      },
+      features: ['GPS intégré', 'Cabine climatisée', 'Économie de carburant', 'Maintenance récente']
+    },
+    {
+      id: 2,
+      name: 'Bulldozer CAT D6T',
+      price: 180000,
+      oldPrice: 220000,
+      discount: 18,
+      pricePerHour: 18000,
+      image: '/assets_images/Bulldozer CAT D6T.jpg',
+      description: 'Bulldozer robuste pour travaux de nivellement et de déblaiement sur tous types de terrains.',
+      specifications: {
+        poids: '15 tonnes',
+        puissance: '130 kW',
+        capacite: '3.5 m³',
+        annee: '2021',
+        etat: 'Très bon'
+      },
+      features: ['Lame ajustable', 'Résistant aux intempéries', 'Faible consommation', 'Contrôle précis']
+    },
+    {
+      id: 3,
+      name: 'Grue Mobile Liebherr LTM 1050',
+      price: 450000,
+      oldPrice: 550000,
+      discount: 18,
+      pricePerHour: 45000,
+      image: '/assets_images/Grue Mobile Liebherr LTM 1050.jpg',
+      description: 'Grue mobile de 50 tonnes avec portée maximale de 50 mètres, parfaite pour les chantiers de construction.',
+      specifications: {
+        poids: '50 tonnes',
+        puissance: '280 kW',
+        capacite: '50 tonnes',
+        annee: '2023',
+        etat: 'Neuf'
+      },
+      features: ['Télécommande', 'Système de sécurité avancé', 'Montage rapide', 'Haute précision']
+    },
+    {
+      id: 4,
+      name: 'Chargeur sur Pneus CAT 950M',
+      price: 120000,
+      oldPrice: 150000,
+      discount: 20,
+      pricePerHour: 12000,
+      image: '/assets_images/Chargeur sur Pneus CAT 950M.jpeg',
+      description: 'Chargeur polyvalent pour le chargement et le transport de matériaux sur chantier.',
+      specifications: {
+        poids: '18 tonnes',
+        puissance: '150 kW',
+        capacite: '3.8 m³',
+        annee: '2022',
+        etat: 'Excellent'
+      },
+      features: ['4 roues motrices', 'Cabine ergonomique', 'Charge rapide', 'Manœuvrabilité']
+    },
+    {
+      id: 5,
+      name: 'Compacteur de Sol CAT CS56',
+      price: 35000,
+      oldPrice: 45000,
+      discount: 22,
+      pricePerHour: 3500,
+      image: '/assets_images/Compacteur de Sol CAT CS56.jpeg',
+      description: 'Compacteur vibratoire pour le compactage des sols et des routes.',
+      specifications: {
+        poids: '5 tonnes',
+        puissance: '75 kW',
+        capacite: '1.5 m',
+        annee: '2021',
+        etat: 'Très bon'
+      },
+      features: ['Vibration réglable', 'Facile à transporter', 'Économique', 'Efficace']
+    },
+    {
+      id: 6,
+      name: 'Bétonnière Mobile 6 m³',
+      price: 28000,
+      oldPrice: 35000,
+      discount: 20,
+      pricePerHour: 2800,
+      image: '/assets_images/Betonniere Mobile.webp',
+      description: 'Bétonnière mobile pour la préparation et le transport de béton sur chantier.',
+      specifications: {
+        poids: '8 tonnes',
+        puissance: '45 kW',
+        capacite: '6 m³',
+        annee: '2020',
+        etat: 'Bon'
+      },
+      features: ['Rotation continue', 'Décharge rapide', 'Robuste', 'Maintenance simple']
+    }
+  ]
+
+  window.equipmentData = equipment
+  let filteredEquipment = equipment
+  const equipmentGrid = document.getElementById('equipment-grid')
+  const searchInput = document.getElementById('equipment-search-input')
+  const searchBtn = document.getElementById('equipment-search-btn')
+
+  function getImageSrc(imagePath) {
+    return encodeURI(imagePath)
+  }
+
+  function handleImageError(e, fallbackIndex = 0, attempt = 0) {
+    const img = e.target || e
+    const fallbackImages = [
+      '/assets_images/WhatsApp Image 2026-01-30 at 17.36.52.jpeg',
+      '/assets_images/WhatsApp Image 2026-01-30 at 17.37.03 (1).jpeg'
+    ]
+    
+    if (attempt > 10) {
+      if (fallbackIndex < fallbackImages.length) {
+        img.src = fallbackImages[fallbackIndex]
+        img.onerror = () => handleImageError(img, fallbackIndex + 1, 0)
+      } else {
+        img.style.display = 'none'
+      }
+      return
+    }
+    
+    const currentSrc = decodeURIComponent(img.src)
+    const baseUrl = currentSrc.split('/').slice(0, -1).join('/')
+    const fileName = currentSrc.split('/').pop()
+    
+    let newSrc = null
+    if (attempt === 0 && currentSrc.includes('.jpeg') && !currentSrc.includes('WhatsApp')) {
+      newSrc = currentSrc.replace('.jpeg', '.jpg')
+    } else if (attempt === 1 && currentSrc.includes('.jpg') && !currentSrc.includes('WhatsApp')) {
+      newSrc = currentSrc.replace('.jpg', '.jpeg')
+    } else if (attempt === 2 && currentSrc.includes('.webp') && !currentSrc.includes('WhatsApp')) {
+      newSrc = currentSrc.replace('.webp', '.jpeg')
+    } else if (attempt === 3 && fileName && fileName.includes('é')) {
+      newSrc = `${baseUrl}/${fileName.replace(/é/g, 'e').replace(/è/g, 'e').replace(/ê/g, 'e')}`
+    } else if (attempt === 4 && fileName && fileName.includes('³')) {
+      newSrc = `${baseUrl}/${fileName.replace(/m³/g, 'm3').replace(/³/g, '3')}`
+    } else if (attempt === 5 && fileName && fileName.includes('m3')) {
+      newSrc = `${baseUrl}/${fileName.replace(/m3/g, 'm³')}`
+    }
+    
+    if (newSrc) {
+      img.src = encodeURI(newSrc)
+      img.onerror = () => handleImageError(img, fallbackIndex, attempt + 1)
+      return
+    }
+    
+    if (fallbackIndex < fallbackImages.length) {
+      img.src = fallbackImages[fallbackIndex]
+      img.onerror = () => handleImageError(img, fallbackIndex + 1, 0)
+    } else {
+      img.style.display = 'none'
+    }
+  }
+
+  function renderEquipment(equipmentToRender) {
+    equipmentGrid.innerHTML = equipmentToRender.map(item => `
+      <div class="equipment-card">
+        <div class="equipment-image">
+          <img 
+            src="${getImageSrc(item.image)}" 
+            alt="${item.name}" 
+            loading="lazy"
+            onerror="handleImageError(this)" 
+          />
+          <div class="membership-badge" onclick="openEquipmentMembershipModal(${item.id})">
+            Voir le prix avec membership
+          </div>
+        </div>
+        <div class="equipment-info">
+          <h3 class="equipment-name">${item.name}</h3>
+          <div class="equipment-price">
+            <span class="current-price">${item.pricePerHour.toLocaleString()} Gdes/heure</span>
+            <span class="old-price">${item.oldPrice.toLocaleString()} Gdes</span>
+          </div>
+        </div>
+        <div class="equipment-actions">
+          <button class="btn-view-details" onclick="viewEquipmentDetails(${item.id})">Détails</button>
+          <button class="btn-rent" onclick="openRentalModal(${item.id})">Louer</button>
+        </div>
+      </div>
+    `).join('')
+    
+    animateEquipmentOnScroll()
+  }
+
+  function animateEquipmentOnScroll() {
+    const cards = equipmentGrid.querySelectorAll('.equipment-card')
+    cards.forEach(card => {
+      card.style.opacity = '0'
+      card.style.transform = 'translateY(30px)'
+    })
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, index) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add('card-visible')
+            entry.target.style.opacity = '1'
+            entry.target.style.transform = 'translateY(0)'
+          }, index * 100)
+          observer.unobserve(entry.target)
+        }
+      })
+    }, { threshold: 0.1, rootMargin: '50px 0px 50px 0px' })
+    
+    cards.forEach(card => observer.observe(card))
+  }
+
+  function filterEquipment() {
+    const searchTerm = searchInput.value.toLowerCase()
+    filteredEquipment = equipment.filter(item =>
+      item.name.toLowerCase().includes(searchTerm)
+    )
+    renderEquipment(filteredEquipment)
+  }
+
+  searchInput.addEventListener('input', filterEquipment)
+  searchBtn.addEventListener('click', filterEquipment)
+
+  renderEquipment(equipment)
+}
+
+function viewEquipmentDetails(equipmentId) {
+  const equipment = window.equipmentData.find(e => e.id === equipmentId)
+  if (!equipment) return
+
+  const specsHtml = Object.entries(equipment.specifications).map(([key, value]) => `
+    <div class="spec-item">
+      <span class="spec-label">${key.charAt(0).toUpperCase() + key.slice(1)}:</span>
+      <span class="spec-value">${value}</span>
+    </div>
+  `).join('')
+
+  const featuresHtml = equipment.features.map(feature => `
+    <li class="feature-item">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+        <path d="M20 6L9 17L4 12" stroke="#5630FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      ${feature}
+    </li>
+  `).join('')
+
+  document.getElementById('equipment-modal-header').innerHTML = `
+    <img 
+      src="${encodeURI(equipment.image)}" 
+      alt="${equipment.name}" 
+      class="modal-image" 
+      loading="lazy"
+      onerror="handleImageError(this)" 
+    />
+    <h2 class="modal-title">${equipment.name}</h2>
+  `
+
+  document.getElementById('equipment-modal-body').innerHTML = `
+    <p class="modal-description">${equipment.description}</p>
+    
+    <div class="modal-specifications">
+      <h3 class="modal-section-title">Spécifications</h3>
+      <div class="specs-grid">
+        ${specsHtml}
+      </div>
+    </div>
+
+    <div class="modal-features">
+      <h3 class="modal-section-title">Caractéristiques</h3>
+      <ul class="features-list">
+        ${featuresHtml}
+      </ul>
+    </div>
+
+    <div class="modal-price">
+      <div class="modal-price-info">
+        <span class="modal-old-price">${equipment.oldPrice.toLocaleString()} Gdes</span>
+        <span class="modal-current-price">${equipment.price.toLocaleString()} Gdes</span>
+        <span class="modal-discount">-${equipment.discount}%</span>
+      </div>
+      <button 
+        class="btn-modal-rent"
+        onclick="closeEquipmentModal(); setTimeout(() => openRentalModal(${equipment.id}), 100)"
+      >
+        Louer
+      </button>
+    </div>
+  `
+
+  document.getElementById('equipment-modal').style.display = 'flex'
+}
+
+function closeEquipmentModal() {
+  document.getElementById('equipment-modal').style.display = 'none'
+  document.getElementById('equipment-modal-header').innerHTML = ''
+  document.getElementById('equipment-modal-body').innerHTML = ''
+}
+
+function openRentalModal(equipmentId) {
+  const equipment = window.equipmentData.find(e => e.id === equipmentId)
+  if (!equipment) return
+
+  const today = new Date().toISOString().split('T')[0]
+  const tomorrow = new Date()
+  tomorrow.setDate(tomorrow.getDate() + 1)
+  const tomorrowStr = tomorrow.toISOString().split('T')[0]
+
+  window.currentRentalEquipment = equipment
+  window.currentRentalType = 'hours'
+  window.currentRentalHours = 1
+  window.currentRentDate = tomorrowStr
+  window.currentRentEndDate = tomorrowStr
+  window.currentWorkLocation = ''
+
+  document.getElementById('rental-modal-header').innerHTML = `
+    <h2 class="rent-modal-title">Location - ${equipment.name}</h2>
+    <div class="rent-modal-price-info">
+      <span class="rent-price-per-hour">${equipment.pricePerHour.toLocaleString()} Gdes/heure</span>
+    </div>
+  `
+  
+  const rentModalBody = document.createElement('div')
+  rentModalBody.className = 'rent-modal-body'
+  rentModalBody.innerHTML = `
+    <div class="rental-type-selector">
+      <label class="rent-label">Type de location</label>
+      <div class="rental-type-buttons">
+        <button class="rental-type-btn active" data-type="hours" onclick="setRentalType('hours')">Par heures</button>
+        <button class="rental-type-btn" data-type="days" onclick="setRentalType('days')">Par jours</button>
+      </div>
+    </div>
+
+    <div class="rent-date-selector">
+      <label class="rent-label">Date de début</label>
+      <input 
+        type="date" 
+        class="rent-date-input" 
+        id="rent-date" 
+        value="${tomorrowStr}" 
+        min="${today}"
+        onchange="handleRentDateChange(event)"
+      />
+    </div>
+
+    <div class="rent-date-selector" id="rent-end-date-container" style="display: none;">
+      <label class="rent-label">Date de fin</label>
+      <input 
+        type="date" 
+        class="rent-date-input" 
+        id="rent-end-date" 
+        value="${tomorrowStr}"
+        min="${tomorrowStr}"
+        onchange="handleRentEndDateChange(event)"
+      />
+    </div>
+
+    <div class="rent-hours-selector" id="rent-hours-container">
+      <label class="rent-label">Nombre d'heures</label>
+      <div class="rent-hours-controls">
+        <button 
+          class="rent-hours-btn" 
+          type="button"
+          onclick="changeHours(-1)"
+          id="rent-hours-decrease"
+        >-</button>
+        <input 
+          type="number" 
+          class="rent-hours-input" 
+          id="rent-hours" 
+          value="1" 
+          min="1"
+          onchange="handleHoursChange(event)"
+        />
+        <button 
+          class="rent-hours-btn" 
+          type="button"
+          onclick="changeHours(1)"
+        >+</button>
+      </div>
+    </div>
+
+    <div class="rent-date-selector">
+      <label class="rent-label">Lieu de travail <span style="color: red;">*</span></label>
+      <input 
+        type="text" 
+        class="rent-date-input" 
+        id="work-location" 
+        placeholder="Adresse où le matériel va travailler" 
+        required
+        oninput="handleWorkLocationChange(event)"
+      />
+    </div>
+
+    <div class="rent-total">
+      <div class="rent-total-label">Prix total</div>
+      <div class="rent-total-price" id="rent-total-price">${equipment.pricePerHour.toLocaleString()} Gdes</div>
+      <div class="rent-total-hours" id="rent-total-hours">(1 heure)</div>
+    </div>
+
+    <button 
+      class="btn-confirm-rent" 
+      id="confirm-rent-btn" 
+      onclick="confirmRent(${equipmentId})"
+      disabled
+    >
+      Confirmer la location
+    </button>
+  `
+  
+  const rentModalHeader = document.getElementById('rental-modal-header')
+  const rentModalContent = rentModalHeader.closest('.rent-modal-content')
+  if (rentModalContent) {
+    const oldBody = rentModalContent.querySelector('.rent-modal-body')
+    if (oldBody) oldBody.remove()
+    rentModalContent.appendChild(rentModalBody)
+  }
+  
+  // Initialize rental state
+  window.currentRentalEquipment = equipment
+  window.currentRentalType = 'hours'
+  window.currentRentalHours = 1
+  window.currentRentDate = tomorrowStr
+  window.currentRentEndDate = tomorrowStr
+  window.currentWorkLocation = ''
+  
+  setTimeout(() => {
+    updateRentalTotal()
+    // Set initial values
+    const rentDateInput = document.getElementById('rent-date')
+    const workLocationInput = document.getElementById('work-location')
+    if (rentDateInput) rentDateInput.value = tomorrowStr
+    if (workLocationInput) workLocationInput.value = ''
+  }, 100)
+  
+  document.getElementById('rental-modal').style.display = 'flex'
+}
+
+function handleRentDateChange(e) {
+  window.currentRentDate = e.target.value
+  if (window.currentRentalType === 'days') {
+    const endDateInput = document.getElementById('rent-end-date')
+    if (endDateInput && (!endDateInput.value || e.target.value > endDateInput.value)) {
+      endDateInput.value = e.target.value
+      window.currentRentEndDate = e.target.value
+      endDateInput.min = e.target.value
+    }
+  }
+  updateRentalTotal()
+}
+
+function handleRentEndDateChange(e) {
+  window.currentRentEndDate = e.target.value
+  updateRentalTotal()
+}
+
+function handleHoursChange(e) {
+  const value = parseInt(e.target.value) || 1
+  window.currentRentalHours = Math.max(1, value)
+  e.target.value = window.currentRentalHours
+  const decreaseBtn = document.getElementById('rent-hours-decrease')
+  if (decreaseBtn) {
+    decreaseBtn.disabled = window.currentRentalHours <= 1
+  }
+  updateRentalTotal()
+}
+
+function handleWorkLocationChange(e) {
+  window.currentWorkLocation = e.target.value
+  updateRentalTotal()
+}
+
+function changeHours(delta) {
+  const input = document.getElementById('rent-hours')
+  if (!input) return
+  const newValue = Math.max(1, parseInt(input.value) + delta)
+  input.value = newValue
+  window.currentRentalHours = newValue
+  const decreaseBtn = document.getElementById('rent-hours-decrease')
+  if (decreaseBtn) {
+    decreaseBtn.disabled = newValue <= 1
+  }
+  updateRentalTotal()
+}
+
+function calculateTotalPrice() {
+  if (!window.currentRentalEquipment) return 0
+  const equipment = window.currentRentalEquipment
+  
+  if (window.currentRentalType === 'hours') {
+    return equipment.pricePerHour * (window.currentRentalHours || 1)
+  } else {
+    if (!window.currentRentDate || !window.currentRentEndDate) return 0
+    const start = new Date(window.currentRentDate)
+    const end = new Date(window.currentRentEndDate)
+    const diffTime = Math.abs(end - start)
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1
+    return equipment.pricePerHour * 8 * diffDays
+  }
+}
+
+function calculateDays() {
+  if (!window.currentRentDate || !window.currentRentEndDate) return 0
+  const start = new Date(window.currentRentDate)
+  const end = new Date(window.currentRentEndDate)
+  const diffTime = Math.abs(end - start)
+  return Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1
+}
+
+function updateRentalTotal() {
+  if (!window.currentRentalEquipment) return
+
+  const equipment = window.currentRentalEquipment
+  let total = 0
+  let displayText = ''
+
+  if (window.currentRentalType === 'hours') {
+    const hours = window.currentRentalHours || 1
+    total = calculateTotalPrice()
+    displayText = `(${hours} ${hours === 1 ? 'heure' : 'heures'})`
+  } else {
+    const days = calculateDays()
+    total = calculateTotalPrice()
+    displayText = `(${days} ${days === 1 ? 'jour' : 'jours'} - 8h/jour)`
+  }
+
+  const totalPriceEl = document.getElementById('rent-total-price')
+  const totalHoursEl = document.getElementById('rent-total-hours')
+  if (totalPriceEl) totalPriceEl.textContent = total.toLocaleString() + ' Gdes'
+  if (totalHoursEl) totalHoursEl.textContent = displayText
+  
+  const confirmBtn = document.getElementById('confirm-rent-btn')
+  if (confirmBtn) {
+    const rentDate = window.currentRentDate || document.getElementById('rent-date')?.value
+    const workLocation = window.currentWorkLocation || document.getElementById('work-location')?.value
+    const isValid = rentDate && workLocation && 
+      (window.currentRentalType === 'hours' 
+        ? (window.currentRentalHours || 1) > 0 
+        : window.currentRentEndDate && document.getElementById('rent-end-date')?.value)
+    confirmBtn.disabled = !isValid
+  }
+}
+
+function setRentalType(type) {
+  window.currentRentalType = type
+  document.querySelectorAll('.rental-type-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('data-type') === type)
+  })
+  
+  const hoursContainer = document.getElementById('rent-hours-container')
+  const endDateContainer = document.getElementById('rent-end-date-container')
+  
+  if (type === 'hours') {
+    if (hoursContainer) hoursContainer.style.display = 'block'
+    if (endDateContainer) endDateContainer.style.display = 'none'
+    const tomorrow = new Date()
+    tomorrow.setDate(tomorrow.getDate() + 1)
+    if (!window.currentRentEndDate) {
+      window.currentRentEndDate = tomorrow.toISOString().split('T')[0]
+    }
+  } else {
+    if (hoursContainer) hoursContainer.style.display = 'none'
+    if (endDateContainer) endDateContainer.style.display = 'block'
+    const rentDate = window.currentRentDate || document.getElementById('rent-date')?.value
+    const endDateInput = document.getElementById('rent-end-date')
+    if (endDateInput && rentDate) {
+      if (!endDateInput.value || rentDate > endDateInput.value) {
+        endDateInput.value = rentDate
+        window.currentRentEndDate = rentDate
+      }
+      endDateInput.min = rentDate
+    }
+  }
+  
+  updateRentalTotal()
+}
+
+function closeRentalModal() {
+  document.getElementById('rental-modal').style.display = 'none'
+  document.getElementById('rental-modal-header').innerHTML = ''
+  const rentModalContent = document.querySelector('.rent-modal-content')
+  if (rentModalContent) {
+    const oldBody = rentModalContent.querySelector('.rent-modal-body')
+    if (oldBody) oldBody.remove()
+  }
+  // Reset rental state
+  window.currentRentalEquipment = null
+  window.currentRentalType = 'hours'
+  window.currentRentalHours = 1
+  window.currentRentDate = ''
+  window.currentRentEndDate = ''
+  window.currentWorkLocation = ''
+}
+
+function confirmRent(equipmentId) {
+  const equipment = window.equipmentData.find(e => e.id === equipmentId)
+  if (!equipment) return
+
+  const rentDate = window.currentRentDate || document.getElementById('rent-date')?.value
+  const workLocation = window.currentWorkLocation || document.getElementById('work-location')?.value
+  
+  if (!rentDate || !workLocation) {
+    showNotification('Veuillez remplir tous les champs obligatoires', 'error')
+    return
+  }
+
+  let hours = 0
+  let rentalDays = 0
+  
+  if (window.currentRentalType === 'hours') {
+    hours = window.currentRentalHours || parseInt(document.getElementById('rent-hours')?.value) || 1
+    if (hours <= 0) {
+      showNotification('Le nombre d\'heures doit être supérieur à 0', 'error')
+      return
+    }
+  } else {
+    const endDate = window.currentRentEndDate || document.getElementById('rent-end-date')?.value
+    if (!endDate) {
+      showNotification('Veuillez sélectionner une date de fin', 'error')
+      return
+    }
+    rentalDays = calculateDays()
+    hours = rentalDays * 8
+  }
+
+  const totalPrice = calculateTotalPrice()
+
+  const rentalData = {
+    ...equipment,
+    type: 'equipment',
+    quantity: 1,
+    rentalType: window.currentRentalType,
+    rentalHours: window.currentRentalType === 'hours' ? hours : undefined,
+    rentalDays: window.currentRentalType === 'days' ? rentalDays : undefined,
+    rentDate: rentDate,
+    rentEndDate: window.currentRentalType === 'days' ? (window.currentRentEndDate || document.getElementById('rent-end-date')?.value) : undefined,
+    workLocation: workLocation,
+    totalPrice: totalPrice,
+    price: totalPrice
+  }
+
+  if (typeof cartManager !== 'undefined' && cartManager.addToCart) {
+    cartManager.addToCart(rentalData)
+    showNotification('Location ajoutée au panier!')
+    closeRentalModal()
+  } else {
+    showNotification('Erreur: Le gestionnaire de panier n\'est pas disponible', 'error')
+  }
+}
+
+function openEquipmentMembershipModal(equipmentId) {
+  const equipment = window.equipmentData.find(e => e.id === equipmentId)
+  if (!equipment) return
+
+  document.getElementById('equipment-membership-subtitle').textContent = equipment.name
+
+  const calculatePriceWithMembership = (basePrice, discountPercent) => {
+    return Math.round(basePrice * (1 - discountPercent / 100))
+  }
+
+  document.getElementById('equipment-membership-prices').innerHTML = `
+    <div class="membership-price-card gold">
+      <div class="membership-card-header">
+        <span class="membership-card-label">Gold</span>
+        <span class="membership-card-discount">25%</span>
+      </div>
+      <div class="membership-card-price">
+        ${calculatePriceWithMembership(equipment.pricePerHour, 25).toLocaleString()} Gdes/heure
+      </div>
+      <div class="membership-card-old-price">
+        ${equipment.pricePerHour.toLocaleString()} Gdes/heure
+      </div>
+    </div>
+    <div class="membership-price-card silver">
+      <div class="membership-card-header">
+        <span class="membership-card-label">Silver</span>
+        <span class="membership-card-discount">20%</span>
+      </div>
+      <div class="membership-card-price">
+        ${calculatePriceWithMembership(equipment.pricePerHour, 20).toLocaleString()} Gdes/heure
+      </div>
+      <div class="membership-card-old-price">
+        ${equipment.pricePerHour.toLocaleString()} Gdes/heure
+      </div>
+    </div>
+    <div class="membership-price-card bronze">
+      <div class="membership-card-header">
+        <span class="membership-card-label">Bronze</span>
+        <span class="membership-card-discount">15%</span>
+      </div>
+      <div class="membership-card-price">
+        ${calculatePriceWithMembership(equipment.pricePerHour, 15).toLocaleString()} Gdes/heure
+      </div>
+      <div class="membership-card-old-price">
+        ${equipment.pricePerHour.toLocaleString()} Gdes/heure
+      </div>
+    </div>
+  `
+
+  document.getElementById('equipment-membership-modal').style.display = 'flex'
+}
+
+function closeEquipmentMembershipModal() {
+  document.getElementById('equipment-membership-modal').style.display = 'none'
+}
+
+function showNotification(message, type = 'success') {
+  const existing = document.getElementById('notification')
+  if (existing) existing.remove()
+  
+  const notification = document.createElement('div')
+  notification.id = 'notification'
+  notification.className = `notification notification-${type}`
+  notification.textContent = message
+  notification.style.cssText = `
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: ${type === 'error' ? '#ef4444' : '#5630FF'};
+    color: white;
+    padding: 16px 24px;
+    border-radius: 12px;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    z-index: 10000;
+    animation: slideInRight 0.3s ease;
+    font-size: 14px;
+    font-weight: 500;
+  `
+  document.body.appendChild(notification)
+  
+  setTimeout(() => {
+    notification.style.animation = 'slideOutRight 0.3s ease'
+    setTimeout(() => notification.remove(), 300)
+  }, 3000)
+}
+
+if (!document.getElementById('notification-styles')) {
+  const style = document.createElement('style')
+  style.id = 'notification-styles'
+  style.textContent = `
+    @keyframes slideInRight {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    @keyframes slideOutRight {
+      from { transform: translateX(0); opacity: 1; }
+      to { transform: translateX(100%); opacity: 0; }
+    }
+  `
+  document.head.appendChild(style)
+}
+</script>

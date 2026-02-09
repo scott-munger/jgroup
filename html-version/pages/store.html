@@ -1,0 +1,317 @@
+<div class="store-page">
+  <div class="store-header">
+    <div class="store-header-bg"></div>
+    <div class="store-header-content">
+      <a href="/" class="btn-back" data-route="/">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M15 18L9 12L15 6" stroke="#5630FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+    <h1 class="store-title">Produits Alimentaires</h1>
+  </div>
+
+  <div class="store-search">
+    <input 
+      type="text" 
+      class="search-input" 
+      id="store-search-input"
+      placeholder="Taper le nom du produit reherché" 
+    />
+    <button class="btn-find" id="store-search-btn">Trouver</button>
+  </div>
+
+  <div class="store-content">
+    <div class="products-grid" id="products-grid">
+      <!-- Products will be loaded here -->
+    </div>
+  </div>
+
+  <!-- Membership Modal -->
+  <div class="membership-modal-overlay" id="membership-modal" style="display: none;" onclick="closeMembershipModal()">
+    <div class="membership-modal-content" onclick="event.stopPropagation()">
+      <button class="membership-modal-close" onclick="closeMembershipModal()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+          <div class="membership-modal-header">
+        <h2 class="membership-modal-title">Prix avec Membership</h2>
+        <p class="membership-modal-subtitle" id="membership-product-name">Riz Bongu</p>
+      </div>
+      <div class="membership-modal-body" id="membership-prices">
+        <!-- Membership prices will be loaded here -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function initStorePage() {
+  const products = [
+    {
+      id: 1,
+      name: 'Riz Bongu',
+      price: 5200,
+      oldPrice: 6500,
+      discount: 25,
+      image: '../assets_images/rayonnages-palettes-entrepot-aliments-boissons-jot-l.1.1.avif'
+    },
+    {
+      id: 2,
+      name: 'Riz Bongu',
+      price: 5200,
+      oldPrice: 6500,
+      discount: 25,
+      image: '../assets_images/rayonnages-palettes-entrepot-aliments-boissons-jot-l.1.1.avif'
+    },
+    {
+      id: 3,
+      name: 'Riz Bongu',
+      price: 5200,
+      oldPrice: 6500,
+      discount: 25,
+      image: '../assets_images/rayonnages-palettes-entrepot-aliments-boissons-jot-l.1.1.avif'
+    },
+    {
+      id: 4,
+      name: 'Riz Bongu',
+      price: 5200,
+      oldPrice: 6500,
+      discount: 25,
+      image: '../assets_images/rayonnages-palettes-entrepot-aliments-boissons-jot-l.1.1.avif'
+    },
+    {
+      id: 5,
+      name: 'Riz Bongu',
+      price: 5200,
+      oldPrice: 6500,
+      discount: 25,
+      image: '../assets_images/rayonnages-palettes-entrepot-aliments-boissons-jot-l.1.1.avif'
+    },
+    {
+      id: 6,
+      name: 'Riz Bongu',
+      price: 5200,
+      oldPrice: 6500,
+      discount: 25,
+      image: '../assets_images/rayonnages-palettes-entrepot-aliments-boissons-jot-l.1.1.avif'
+    }
+  ]
+
+  let filteredProducts = products
+  const productsGrid = document.getElementById('products-grid')
+  const searchInput = document.getElementById('store-search-input')
+  const searchBtn = document.getElementById('store-search-btn')
+
+  function renderProducts(productsToRender) {
+    productsGrid.innerHTML = productsToRender.map(product => `
+      <div class="product-card">
+        <div class="product-image">
+          <img src="${product.image}" alt="${product.name}" />
+          <div class="membership-badge" onclick="openMembershipModal(${product.id})">
+            Voir le prix avec membership
+          </div>
+        </div>
+        <div class="product-info">
+          <h3 class="product-name">${product.name}</h3>
+          <div class="product-price">
+            <span class="current-price">${product.price.toLocaleString()} Gdes</span>
+            <span class="old-price">${product.oldPrice.toLocaleString()} Gdes</span>
+          </div>
+        </div>
+        <div class="product-actions">
+          <button class="btn-add-cart" onclick="addToCart(${product.id}, 'product')">
+            + au panier
+          </button>
+        </div>
+      </div>
+    `).join('')
+    
+    // Add scroll animation effect
+    animateProductsOnScroll()
+  }
+  
+  function animateProductsOnScroll() {
+    const productCards = productsGrid.querySelectorAll('.product-card')
+    
+    // Set initial state for animation
+    productCards.forEach(card => {
+      card.style.opacity = '0'
+      card.style.transform = 'translateY(30px)'
+    })
+    
+    // Create IntersectionObserver
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, index) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add('card-visible')
+            entry.target.style.opacity = '1'
+            entry.target.style.transform = 'translateY(0)'
+          }, index * 100)
+          observer.unobserve(entry.target)
+        }
+      })
+    }, { threshold: 0.1, rootMargin: '50px 0px 50px 0px' })
+    
+    // Observe each card
+    productCards.forEach(card => {
+      observer.observe(card)
+    })
+  }
+
+  function filterProducts() {
+    const searchTerm = searchInput.value.toLowerCase()
+    filteredProducts = products.filter(product =>
+      product.name.toLowerCase().includes(searchTerm)
+    )
+    renderProducts(filteredProducts)
+  }
+
+  searchInput.addEventListener('input', filterProducts)
+  searchBtn.addEventListener('click', filterProducts)
+
+  renderProducts(products)
+}
+
+function showNotification(message, type = 'success') {
+  // Remove existing notification if any
+  const existing = document.getElementById('notification')
+  if (existing) existing.remove()
+  
+  const notification = document.createElement('div')
+  notification.id = 'notification'
+  notification.className = `notification notification-${type}`
+  notification.textContent = message
+  notification.style.cssText = `
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: ${type === 'error' ? '#ef4444' : '#5630FF'};
+    color: white;
+    padding: 16px 24px;
+    border-radius: 12px;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    z-index: 10000;
+    animation: slideInRight 0.3s ease;
+    font-size: 14px;
+    font-weight: 500;
+  `
+  document.body.appendChild(notification)
+  
+  setTimeout(() => {
+    notification.style.animation = 'slideOutRight 0.3s ease'
+    setTimeout(() => notification.remove(), 300)
+  }, 3000)
+}
+
+// Add CSS animations
+if (!document.getElementById('notification-styles')) {
+  const style = document.createElement('style')
+  style.id = 'notification-styles'
+  style.textContent = `
+    @keyframes slideInRight {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+    @keyframes slideOutRight {
+      from {
+        transform: translateX(0);
+        opacity: 1;
+      }
+      to {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+    }
+  `
+  document.head.appendChild(style)
+}
+
+function addToCart(productId, type) {
+  const products = [
+    { id: 1, name: 'Riz Bongu', price: 5200, image: '../assets_images/rayonnages-palettes-entrepot-aliments-boissons-jot-l.1.1.avif', type: 'product' },
+    { id: 2, name: 'Riz Bongu', price: 5200, image: '../assets_images/rayonnages-palettes-entrepot-aliments-boissons-jot-l.1.1.avif', type: 'product' },
+    { id: 3, name: 'Riz Bongu', price: 5200, image: '../assets_images/rayonnages-palettes-entrepot-aliments-boissons-jot-l.1.1.avif', type: 'product' },
+    { id: 4, name: 'Riz Bongu', price: 5200, image: '../assets_images/rayonnages-palettes-entrepot-aliments-boissons-jot-l.1.1.avif', type: 'product' },
+    { id: 5, name: 'Riz Bongu', price: 5200, image: '../assets_images/rayonnages-palettes-entrepot-aliments-boissons-jot-l.1.1.avif', type: 'product' },
+    { id: 6, name: 'Riz Bongu', price: 5200, image: '../assets_images/rayonnages-palettes-entrepot-aliments-boissons-jot-l.1.1.avif', type: 'product' }
+  ]
+  
+  const product = products.find(p => p.id === productId)
+  if (product) {
+    cartManager.addToCart({ ...product, quantity: 1 })
+    // Show notification without alert
+    showNotification('Produit ajouté au panier!')
+  }
+}
+
+function openMembershipModal(productId) {
+  const products = [
+    { id: 1, name: 'Riz Bongu', oldPrice: 6500 },
+    { id: 2, name: 'Riz Bongu', oldPrice: 6500 },
+    { id: 3, name: 'Riz Bongu', oldPrice: 6500 },
+    { id: 4, name: 'Riz Bongu', oldPrice: 6500 },
+    { id: 5, name: 'Riz Bongu', oldPrice: 6500 },
+    { id: 6, name: 'Riz Bongu', oldPrice: 6500 }
+  ]
+  
+  const product = products.find(p => p.id === productId)
+  if (!product) return
+
+  const calculatePriceWithMembership = (oldPrice, discountPercent) => {
+    return Math.round(oldPrice * (1 - discountPercent / 100))
+  }
+
+  document.getElementById('membership-product-name').textContent = product.name
+
+  const pricesHtml = `
+    <div class="membership-price-card gold">
+      <div class="membership-card-header">
+        <span class="membership-card-label">Gold</span>
+        <span class="membership-card-discount">25%</span>
+      </div>
+      <div class="membership-card-price">${calculatePriceWithMembership(product.oldPrice, 25).toLocaleString()} Gdes</div>
+      <div class="membership-card-old-price">${product.oldPrice.toLocaleString()} Gdes</div>
+    </div>
+    <div class="membership-price-card silver">
+      <div class="membership-card-header">
+        <span class="membership-card-label">Silver</span>
+        <span class="membership-card-discount">20%</span>
+      </div>
+      <div class="membership-card-price">${calculatePriceWithMembership(product.oldPrice, 20).toLocaleString()} Gdes</div>
+      <div class="membership-card-old-price">${product.oldPrice.toLocaleString()} Gdes</div>
+    </div>
+    <div class="membership-price-card bronze">
+      <div class="membership-card-header">
+        <span class="membership-card-label">Bronze</span>
+        <span class="membership-card-discount">15%</span>
+      </div>
+      <div class="membership-card-price">${calculatePriceWithMembership(product.oldPrice, 15).toLocaleString()} Gdes</div>
+      <div class="membership-card-old-price">${product.oldPrice.toLocaleString()} Gdes</div>
+    </div>
+  `
+
+  document.getElementById('membership-prices').innerHTML = pricesHtml
+  document.getElementById('membership-modal').style.display = 'flex'
+}
+
+function closeMembershipModal() {
+  document.getElementById('membership-modal').style.display = 'none'
+}
+
+// Close modal on overlay click
+document.addEventListener('click', (e) => {
+  const modal = document.getElementById('membership-modal')
+  if (e.target === modal) {
+    closeMembershipModal()
+  }
+})
+</script>

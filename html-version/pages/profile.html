@@ -1,0 +1,316 @@
+<div class="profile-page">
+  <div class="profile-header">
+    <a href="/" class="btn-back" data-route="/">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M15 18L9 12L15 6" stroke="#5630FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+    <div class="profile-picture-container">
+      <div class="profile-picture" id="profile-picture" onclick="document.getElementById('profile-image-input').click()">
+        <div class="profile-avatar" id="profile-avatar"></div>
+        <div class="profile-picture-overlay">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="camera-icon">
+            <path d="M23 19C23 19.5304 22.7893 20.0391 22.4142 20.4142C22.0391 20.7893 21.5304 21 21 21H3C2.46957 21 1.96086 20.7893 1.58579 20.4142C1.21071 20.0391 1 19.5304 1 19V8C1 7.46957 1.21071 6.96086 1.58579 6.58579C1.96086 6.21071 2.46957 6 3 6H7L9 4H15L17 6H21C21.5304 6 22.0391 6.21071 22.4142 6.58579C22.7893 6.96086 23 7.46957 23 8V19Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="12" cy="13" r="4" stroke="white" stroke-width="2"/>
+          </svg>
+        </div>
+      </div>
+      <input type="file" id="profile-image-input" accept="image/*" style="display: none;" onchange="handleProfileImageChange(event)" />
+    </div>
+    <div class="profile-greeting">
+      <span>Bonjour, </span>
+      <span class="profile-name">Sarah</span>
+    </div>
+  </div>
+
+  <div class="profile-content">
+    <div class="profile-left-column">
+      <div class="feature-cards">
+        <div class="membership-cards-stack" id="profile-membership-cards">
+          <div class="membership-card gold-card" id="profile-gold-card">
+            <div class="card-type">Gold</div>
+            <div class="card-brand">JGroup</div>
+            <div class="card-name">Sarah Pierre</div>
+            <div class="card-barcode">
+              <svg class="barcode-svg" id="profile-barcode-1"></svg>
+            </div>
+            <div class="card-bottom-right">
+              <div class="card-discount">25% De Reduction</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="summary-cards">
+        <div class="summary-card">
+          <div class="summary-label">Total commande</div>
+          <div class="summary-value">50 000 Gourdes</div>
+        </div>
+        <div class="summary-card bonus-card">
+          <div class="bonus-badge">+10%</div>
+          <div class="summary-label bonus-label">Bonus</div>
+          <div class="summary-value bonus-value">25590.58</div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-label">Balance</div>
+          <div class="summary-value">5 000 gourdes</div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-label">Solde</div>
+          <div class="summary-value">40 000 gourdes</div>
+        </div>
+      </div>
+
+      <div class="action-buttons">
+        <button class="btn-action btn-primary">Rapports</button>
+      </div>
+    </div>
+
+    <div class="profile-right-column">
+      <div class="profile-section">
+        <h3 class="section-title">Modifier Votre Profil</h3>
+        <div class="profile-form">
+          <div class="profile-form-group">
+            <label class="profile-label">Nom complet</label>
+            <input type="text" placeholder="Sarah Pierre" class="profile-input" />
+          </div>
+          <div class="profile-form-group">
+            <label class="profile-label">Email</label>
+            <input type="email" placeholder="sarahpierre@gmail.com" class="profile-input" />
+          </div>
+          <div class="profile-form-group">
+            <label class="profile-label">Nouveau mot de passe</label>
+            <input type="password" placeholder="••••••••" class="profile-input" />
+          </div>
+          <div class="profile-form-group">
+            <label class="profile-label">Confirmer le mot de passe</label>
+            <input type="password" placeholder="••••••••" class="profile-input" />
+          </div>
+          <button class="btn-save-profile">Enregistrer les modifications</button>
+        </div>
+      </div>
+
+      <div class="profile-section">
+        <h3 class="section-title">Historique commandes</h3>
+        <div class="order-history">
+          <div class="order-item">
+            <div class="order-info">
+              <div class="order-id">ID: #001234</div>
+              <div class="order-name">3 sac riz Bongu</div>
+              <div class="order-date">23/01/26</div>
+            </div>
+            <div class="order-status">Livrée</div>
+            <div class="order-price">20 500 Gourdes</div>
+          </div>
+          <div class="order-item">
+            <div class="order-info">
+              <div class="order-id">ID: #001235</div>
+              <div class="order-name">3 sac riz Bongu</div>
+              <div class="order-date">23/01/26</div>
+            </div>
+            <div class="order-status">Livrée</div>
+            <div class="order-price">20 500 Gourdes</div>
+          </div>
+          <div class="order-item">
+            <div class="order-info">
+              <div class="order-id">ID: #001236</div>
+              <div class="order-name">3 sac riz Bongu</div>
+              <div class="order-date">23/01/26</div>
+            </div>
+            <div class="order-status">Livrée</div>
+            <div class="order-price">20 500 Gourdes</div>
+          </div>
+          <div class="order-item">
+            <div class="order-info">
+              <div class="order-id">ID: #001237</div>
+              <div class="order-name">5 sac riz Bongu</div>
+              <div class="order-date">22/01/26</div>
+            </div>
+            <div class="order-status">En cours</div>
+            <div class="order-price">34 000 Gourdes</div>
+          </div>
+          <div class="order-item">
+            <div class="order-info">
+              <div class="order-id">ID: #001238</div>
+              <div class="order-name">2 sac riz Bongu</div>
+              <div class="order-date">21/01/26</div>
+            </div>
+            <div class="order-status">Livrée</div>
+            <div class="order-price">13 000 Gourdes</div>
+          </div>
+          <div class="order-item">
+            <div class="order-info">
+              <div class="order-id">ID: #001239</div>
+              <div class="order-name">4 sac riz Bongu</div>
+              <div class="order-date">20/01/26</div>
+            </div>
+            <div class="order-status">Livrée</div>
+            <div class="order-price">26 000 Gourdes</div>
+          </div>
+          <div class="order-item">
+            <div class="order-info">
+              <div class="order-id">ID: #001240</div>
+              <div class="order-name">6 sac riz Bongu</div>
+              <div class="order-date">19/01/26</div>
+            </div>
+            <div class="order-status">Livrée</div>
+            <div class="order-price">39 000 Gourdes</div>
+          </div>
+          <div class="order-item">
+            <div class="order-info">
+              <div class="order-id">ID: #001241</div>
+              <div class="order-name">3 sac riz Bongu</div>
+              <div class="order-date">18/01/26</div>
+            </div>
+            <div class="order-status">Livrée</div>
+            <div class="order-price">20 500 Gourdes</div>
+          </div>
+          <div class="order-item">
+            <div class="order-info">
+              <div class="order-id">ID: #001242</div>
+              <div class="order-name">2 sac riz Bongu</div>
+              <div class="order-date">17/01/26</div>
+            </div>
+            <div class="order-status">Livrée</div>
+            <div class="order-price">13 000 Gourdes</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function handleProfileImageChange(e) {
+  const file = e.target.files[0]
+  if (file) {
+    if (!file.type.startsWith('image/')) {
+      alert('Veuillez sélectionner une image')
+      return
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      alert('L\'image est trop grande. Taille maximale : 5MB')
+      return
+    }
+    const reader = new FileReader()
+    reader.onloadend = () => {
+      const profilePicture = document.getElementById('profile-picture')
+      const profileAvatar = document.getElementById('profile-avatar')
+      if (profileAvatar) {
+        profileAvatar.innerHTML = `<img src="${reader.result}" alt="Photo de profil" class="profile-avatar-img" />`
+      }
+      localStorage.setItem('profileImage', reader.result)
+    }
+    reader.readAsDataURL(file)
+  }
+}
+
+// Load profile image from localStorage and initialize cards
+function initProfileCards() {
+  const savedImage = localStorage.getItem('profileImage')
+  if (savedImage) {
+    const profileAvatar = document.getElementById('profile-avatar')
+    if (profileAvatar) {
+      profileAvatar.innerHTML = `<img src="${savedImage}" alt="Photo de profil" class="profile-avatar-img" />`
+    }
+  }
+  
+  // Generate barcode for membership card
+  const barcodes = [
+    { id: 'profile-barcode-1', code: 'JGROUP001' }
+  ]
+
+  barcodes.forEach(({ id, code }) => {
+    const svg = document.getElementById(id)
+    if (!svg) return
+
+    const width = 200
+    const height = 35
+    svg.setAttribute('width', width)
+    svg.setAttribute('height', height)
+    svg.setAttribute('viewBox', `0 0 ${width} ${height}`)
+
+    let x = 0
+    const barWidth = 2
+    const spacing = 1
+
+    for (let i = 0; i < code.length; i++) {
+      const char = code.charCodeAt(i)
+      const barHeight = height * (0.3 + (char % 70) / 100)
+      
+      const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect')
+      rect.setAttribute('x', x)
+      rect.setAttribute('y', (height - barHeight) / 2)
+      rect.setAttribute('width', barWidth)
+      rect.setAttribute('height', barHeight)
+      rect.setAttribute('fill', '#ffffff')
+      svg.appendChild(rect)
+
+      x += barWidth + spacing
+    }
+  })
+}
+
+function initOrderHistory() {
+  const history = document.querySelector('.order-history')
+  if (!history) return
+
+  const items = Array.from(history.querySelectorAll('.order-item'))
+  if (items.length === 0) return
+
+  const maxVisible = window.innerWidth >= 768 ? 6 : 3
+  if (items.length <= maxVisible) return
+
+  items.slice(maxVisible).forEach(item => item.classList.add('order-item-hidden'))
+
+  const existingButton = history.querySelector('.btn-see-more-orders')
+  if (existingButton) existingButton.remove()
+
+  const button = document.createElement('button')
+  button.className = 'btn-see-more-orders'
+  button.textContent = 'Voir plus de commandes'
+
+  let expanded = false
+
+  button.addEventListener('click', () => {
+    expanded = !expanded
+    if (expanded) {
+      items.forEach(item => item.classList.remove('order-item-hidden'))
+      button.textContent = 'Voir moins de commandes'
+    } else {
+      items.slice(maxVisible).forEach(item => item.classList.add('order-item-hidden'))
+      button.textContent = 'Voir plus de commandes'
+    }
+  })
+
+  history.appendChild(button)
+  
+  let resizeTimeout
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout)
+    resizeTimeout = setTimeout(() => {
+      const btn = history.querySelector('.btn-see-more-orders')
+      if (btn) {
+        expanded = false
+        const newMax = window.innerWidth >= 768 ? 6 : 3
+        items.forEach(item => item.classList.remove('order-item-hidden'))
+        items.slice(newMax).forEach(item => item.classList.add('order-item-hidden'))
+        btn.textContent = 'Voir plus de commandes'
+      }
+    }, 250)
+  })
+}
+
+function initProfilePage() {
+  initProfileCards()
+  initOrderHistory()
+}
+
+// Call immediately if DOM is ready, otherwise wait for DOMContentLoaded
+if (document.readyState === 'loading') {
+  window.addEventListener('DOMContentLoaded', initProfilePage)
+} else {
+  // DOM is already ready, call immediately
+  initProfilePage()
+}
+</script>
