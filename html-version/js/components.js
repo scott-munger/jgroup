@@ -1,7 +1,7 @@
 // Components initialization
 function initNavbar() {
-  const navbar = document.getElementById('navbar')
-  if (!navbar) return
+  const navbar = document.getElementById("navbar");
+  if (!navbar) return;
 
   navbar.innerHTML = `
     <div class="navbar-container">
@@ -16,64 +16,64 @@ function initNavbar() {
         <li><a href="/cart" class="navbar-link" data-route="/cart">Panier</a></li>
       </ul>
     </div>
-  `
-  
+  `;
+
   // Create overlay element if it doesn't exist
-  if (!document.querySelector('.navbar-overlay')) {
-    const overlay = document.createElement('div')
-    overlay.className = 'navbar-overlay'
-    document.body.appendChild(overlay)
+  if (!document.querySelector(".navbar-overlay")) {
+    const overlay = document.createElement("div");
+    overlay.className = "navbar-overlay";
+    document.body.appendChild(overlay);
   }
 
   // Ensure navbar is hidden by default on mobile
   if (window.innerWidth <= 767) {
-    navbar.style.display = 'none'
+    navbar.style.display = "none";
   }
-  
+
   // Close navbar when clicking on a link
-  const navMenu = document.getElementById('navbar-menu')
+  const navMenu = document.getElementById("navbar-menu");
   if (navMenu) {
-    navMenu.querySelectorAll('.navbar-link').forEach(link => {
-      link.addEventListener('click', () => {
+    navMenu.querySelectorAll(".navbar-link").forEach((link) => {
+      link.addEventListener("click", () => {
         setTimeout(() => {
-          if (navMenu) navMenu.classList.remove('active')
-          if (navbar) navbar.style.display = 'none'
-          const menuToggle = document.getElementById('menu-toggle')
-          if (menuToggle) menuToggle.classList.remove('active')
+          if (navMenu) navMenu.classList.remove("active");
+          if (navbar) navbar.style.display = "none";
+          const menuToggle = document.getElementById("menu-toggle");
+          if (menuToggle) menuToggle.classList.remove("active");
           // Remove overlay
-          const overlay = document.querySelector('.navbar-overlay')
-          if (overlay) overlay.remove()
-        }, 100)
-      })
-    })
+          const overlay = document.querySelector(".navbar-overlay");
+          if (overlay) overlay.remove();
+        }, 100);
+      });
+    });
   }
 }
 
 function initComponents() {
   // Initialize Services
-  initServices()
-  
+  initServices();
+
   // Initialize Differences
-  initDifferences()
-  
+  initDifferences();
+
   // Initialize Foundation
-  initFoundation()
-  
+  initFoundation();
+
   // Initialize CTA
-  initCTA()
-  
+  initCTA();
+
   // Initialize Hero animation
-  initHeroAnimation()
-  
+  initHeroAnimation();
+
   // Initialize Profile Mockup (loaded from profile-mockup.js)
-  if (typeof initProfileMockup === 'function') {
-    initProfileMockup()
+  if (typeof initProfileMockup === "function") {
+    initProfileMockup();
   }
 }
 
 function initProfileMockup() {
-  const profileMockup = document.getElementById('profile-mockup')
-  if (!profileMockup) return
+  const profileMockup = document.getElementById("profile-mockup");
+  if (!profileMockup) return;
 
   // This will be loaded from a separate component file
   // For now, we'll add a placeholder
@@ -96,57 +96,67 @@ function initProfileMockup() {
       </div>
       <!-- Membership cards will be added here -->
     </div>
-  `
-  
+  `;
+
   // Animate client count
-  animateCounter('client-count', 75, 2000)
+  animateCounter("client-count", 75, 2000);
 }
 
 function initServices() {
-  const servicesSection = document.getElementById('services')
+  const servicesSection = document.getElementById("services");
   if (!servicesSection) {
-    console.warn('Services section not found')
-    return
+    console.warn("Services section not found");
+    return;
   }
 
   const services = [
     {
-      title: 'Construction',
-      description: 'Gestion des engins lourds, matériaux de chantier et livraisons pour vos projets de construction et de fondation.',
-      image: '/assets_images/construction.jpeg',
-      link: '/construction'
+      title: "Construction",
+      description:
+        "Gestion des engins lourds, matériaux de chantier et livraisons pour vos projets de construction et de fondation.",
+      image: "/assets_images/construction.jpeg",
+      link: "/construction",
     },
     {
-      title: 'Produits Alimentaires',
-      description: 'Approvisionnement et distribution de produits alimentaires pour particuliers, entreprises et collectivités.',
-      image: '/assets_images/rayonnages-palettes-entrepot-aliments-boissons-jot-l.1.1.avif',
-      link: '/store'
+      title: "Produits Alimentaires",
+      description:
+        "Approvisionnement et distribution de produits alimentaires pour particuliers, entreprises et collectivités.",
+      image:
+        "/assets_images/rayonnages-palettes-entrepot-aliments-boissons-jot-l.1.1.avif",
+      link: "/store",
     },
     {
-      title: 'Carburant',
-      description: 'Vente, stockage et distribution de carburant en gros ou au détail, avec suivi des quantités et des sites.',
-      image: '/assets_images/pngtree-rear-and-side-view-of-tanker-truck-vehicle-image_15661785.jpg',
-      link: '/carburant'
+      title: "Carburant",
+      description:
+        "Vente, stockage et distribution de carburant en gros ou au détail, avec suivi des quantités et des sites.",
+      image:
+        "/assets_images/pngtree-rear-and-side-view-of-tanker-truck-vehicle-image_15661785.jpg",
+      link: "/carburant",
     },
     {
-      title: 'Assainissement',
-      description: 'Collecte et transport des déchets avec suivi des camions et validation client de la livraison.',
-      image: '/assets_images/camions-ordures-ville-quebec-cueillette-ordures-menageres-camion-benne-ville-de-quebec-bacs-ordures-et-recyclage-ville-de-quebec-en-bord-de-ruebas-vert-bac-bleu-64630.avif',
-      link: '/assainissement'
+      title: "Assainissement",
+      description:
+        "Collecte et transport des déchets avec suivi des camions et validation client de la livraison.",
+      image:
+        "/assets_images/camions-ordures-ville-quebec-cueillette-ordures-menageres-camion-benne-ville-de-quebec-bacs-ordures-et-recyclage-ville-de-quebec-en-bord-de-ruebas-vert-bac-bleu-64630.avif",
+      link: "/assainissement",
     },
     {
-      title: 'Matériels & Engins Lourds',
-      description: 'Location et vente de matériels de construction et engins lourds pour vos projets. Excavatrices, bulldozers, grues et plus.',
-      image: '/assets_images/construction.jpeg',
-      link: '/equipment'
-    }
-  ]
+      title: "Matériels & Engins Lourds",
+      description:
+        "Location et vente de matériels de construction et engins lourds pour vos projets. Excavatrices, bulldozers, grues et plus.",
+      image: "/assets_images/construction.jpeg",
+      link: "/equipment",
+    },
+  ];
 
   servicesSection.innerHTML = `
     <div class="services-container">
       <h2 class="services-title">En savoir plus sur Nos differents services</h2>
       <div class="services-list">
-        ${services.map((service, index) => `
+        ${services
+          .map(
+            (service, index) => `
           <div class="service-card" data-index="${index}">
             <div class="service-card-image">
               <img src="${service.image}" alt="${service.title}" />
@@ -159,64 +169,75 @@ function initServices() {
               <a href="${service.link}" class="btn-service" data-route="${service.link}">Consulter Plus</a>
             </div>
           </div>
-        `).join('')}
+        `,
+          )
+          .join("")}
       </div>
     </div>
-  `
+  `;
 
   // Animate cards on scroll
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, index) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => {
-          entry.target.classList.add('card-visible')
-        }, index * 150)
-        observer.unobserve(entry.target)
-      }
-    })
-  }, { threshold: 0.1, rootMargin: '50px 0px 50px 0px' })
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry, index) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add("card-visible");
+          }, index * 150);
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.1, rootMargin: "50px 0px 50px 0px" },
+  );
 
-  servicesSection.querySelectorAll('.service-card').forEach(card => {
-    observer.observe(card)
-  })
+  servicesSection.querySelectorAll(".service-card").forEach((card) => {
+    observer.observe(card);
+  });
 }
 
 function initDifferences() {
-  const differencesSection = document.getElementById('differences')
+  const differencesSection = document.getElementById("differences");
   if (!differencesSection) {
-    console.warn('Differences section not found')
-    return
+    console.warn("Differences section not found");
+    return;
   }
-  console.log('✅ Initializing Differences section')
+  console.log("✅ Initializing Differences section");
 
   const differences = [
     {
-      icon: 'icons/tout.png',
-      title: 'Service complet',
-      description: 'Une seule plateforme pour gérer construction, carburant, transport, assainissement et social.'
+      icon: "icons/tout.png",
+      title: "Service complet",
+      description:
+        "Une seule plateforme pour gérer construction, carburant, transport, assainissement et social.",
     },
     {
-      icon: 'icons/fiabilite.png',
-      title: 'Fiabilité terrain',
-      description: 'Livraisons, transferts et suivis toujours précis et traçables, même sur mobile.'
+      icon: "icons/fiabilite.png",
+      title: "Fiabilité terrain",
+      description:
+        "Livraisons, transferts et suivis toujours précis et traçables, même sur mobile.",
     },
     {
-      icon: 'icons/fondation.png',
-      title: 'Engagement social',
-      description: 'Notre fondation soutient le développement éducatif et social des communautés.'
+      icon: "icons/fondation.png",
+      title: "Engagement social",
+      description:
+        "Notre fondation soutient le développement éducatif et social des communautés.",
     },
     {
-      icon: 'icons/vitesse.png',
-      title: 'Simplicité & rapidité',
-      description: 'Commandes en quelques clics, suivi en temps réel, validation instantanée.'
-    }
-  ]
+      icon: "icons/vitesse.png",
+      title: "Simplicité & rapidité",
+      description:
+        "Commandes en quelques clics, suivi en temps réel, validation instantanée.",
+    },
+  ];
 
   differencesSection.innerHTML = `
     <div class="differences-container">
       <h2 class="differences-title">Ce qui nous rend Different des autres</h2>
       <div class="differences-scroll">
-        ${differences.map(diff => `
+        ${differences
+          .map(
+            (diff) => `
           <div class="difference-card">
             <div class="difference-icon">
               <img src="${diff.icon}" alt="${diff.title}" />
@@ -224,19 +245,21 @@ function initDifferences() {
             <h3 class="difference-card-title">${diff.title}</h3>
             <p class="difference-card-description">${diff.description}</p>
           </div>
-        `).join('')}
+        `,
+          )
+          .join("")}
       </div>
     </div>
-  `
+  `;
 }
 
 function initFoundation() {
-  const foundationSection = document.getElementById('foundation')
+  const foundationSection = document.getElementById("foundation");
   if (!foundationSection) {
-    console.warn('Foundation section not found')
-    return
+    console.warn("Foundation section not found");
+    return;
   }
-  console.log('✅ Initializing Foundation section')
+  console.log("✅ Initializing Foundation section");
 
   foundationSection.innerHTML = `
     <div class="foundation-container">
@@ -263,14 +286,14 @@ function initFoundation() {
         </div>
       </div>
     </div>
-  `
+  `;
 }
 
 function initCTA() {
-  const ctaSection = document.getElementById('cta')
+  const ctaSection = document.getElementById("cta");
   if (!ctaSection) {
-    console.warn('CTA section not found')
-    return
+    console.warn("CTA section not found");
+    return;
   }
 
   ctaSection.innerHTML = `
@@ -282,41 +305,44 @@ function initCTA() {
         <a href="/profile" class="btn-cta" data-route="/profile">Créer un compte</a>
       </div>
     </div>
-  `
+  `;
 }
 
 function initHeroAnimation() {
-  const statNumber = document.getElementById('hero-stat-number')
+  const statNumber = document.getElementById("hero-stat-number");
   if (statNumber) {
-    animateCounter('hero-stat-number', 10, 1000)
+    animateCounter("hero-stat-number", 10, 1000);
   }
 }
 
 // Utility function to animate counters
 function animateCounter(elementId, target, duration) {
-  const element = document.getElementById(elementId)
-  if (!element) return
+  const element = document.getElementById(elementId);
+  if (!element) return;
 
-  const start = 0
-  const increment = target / (duration / 16)
-  let current = start
+  const start = 0;
+  const increment = target / (duration / 16);
+  let current = start;
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const timer = setInterval(() => {
-          current += increment
-          if (current >= target) {
-            element.textContent = target
-            clearInterval(timer)
-          } else {
-            element.textContent = Math.floor(current)
-          }
-        }, 16)
-        observer.unobserve(entry.target)
-      }
-    })
-  }, { threshold: 0.1 })
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+              element.textContent = target;
+              clearInterval(timer);
+            } else {
+              element.textContent = Math.floor(current);
+            }
+          }, 16);
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.1 },
+  );
 
-  observer.observe(element)
+  observer.observe(element);
 }

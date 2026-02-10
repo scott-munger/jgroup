@@ -2086,89 +2086,75 @@ html {
   margin: 0 auto;
 }
 
-/* Single card in profile - no stacking effect */
+/* Override pour profil avec une seule carte */
 #profile-membership-cards {
   height: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  max-width: 420px;
   padding: 20px;
-  min-height: auto;
-  width: 100%;
-  box-sizing: border-box;
 }
 
 #profile-membership-cards .membership-card {
-  position: relative !important;
+  position: relative;
+  margin: 0 auto;
+  left: auto;
+  top: auto;
   transform: none !important;
   rotate: 0deg !important;
   translate: 0 0 !important;
-  left: auto !important;
-  top: auto !important;
-  width: 100% !important;
-  max-width: 380px !important;
-  height: 260px !important;
+}
+
+/* S'assurer que les cartes du profil ont EXACTEMENT les mêmes styles que les cartes de home */
+#profile-membership-cards .card-name {
+  font-size: 24px;
+  font-weight: 400;
+  letter-spacing: 0.3px;
+  position: absolute;
+  top: 70px;
+  left: 28px;
+  right: 28px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
+  margin-bottom: 15px;
+  line-height: 1.3;
+  padding-left: 0;
+  max-width: calc(100% - 56px);
+  z-index: 2;
+}
+
+#profile-membership-cards .card-barcode {
+  position: absolute;
+  bottom: 95px;
+  left: 28px;
+  right: 28px;
+  padding: 6px 8px;
+  background-color: transparent;
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 38px;
   z-index: 1;
-  margin: 0 auto;
+  margin-top: auto;
+}
+
+#profile-membership-cards .barcode-svg {
+  width: 100%;
+  height: 34px;
+  max-width: 100%;
 }
 
 @media (min-width: 768px) {
   #profile-membership-cards {
     padding: 30px;
-    max-width: 420px;
-    margin: 0 auto;
-  }
-
-  #profile-membership-cards .membership-card {
-    max-width: 400px;
-    height: 280px;
-    padding: 32px;
   }
 }
 
 @media (min-width: 1024px) {
-  .profile-left-column .feature-cards {
-    width: 100%;
-    max-width: 100%;
-    min-height: auto;
-    align-items: flex-start;
-  }
-
   #profile-membership-cards {
-    padding: 0;
-    max-width: 100%;
-    width: 100%;
-    height: auto;
-    min-height: auto;
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    box-sizing: border-box;
-  }
-
-  #profile-membership-cards .membership-card {
-    max-width: 100%;
-    width: 100%;
-    height: 260px;
-    padding: 28px;
-    position: relative;
-    margin: 0;
-    box-sizing: border-box;
-  }
-
-  /* Espacement code-barres pour carte profil PC */
-  #profile-membership-cards .card-name {
-    top: 70px;
-    max-height: 55px;
-    overflow: hidden;
-    line-height: 1.2;
-    margin-bottom: 0;
-  }
-
-  #profile-membership-cards .card-barcode {
-    bottom: 105px;
-    padding: 8px 10px;
-    margin-top: 20px;
+    padding: 30px 0;
+    max-width: 420px;
   }
 }
 
@@ -2268,7 +2254,7 @@ html {
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 0;
-  margin-bottom: 30px;
+  margin-bottom: 15px;
   line-height: 1.3;
   padding-left: 0;
   max-width: calc(100% - 56px);
@@ -2277,23 +2263,23 @@ html {
 
 .card-barcode {
   position: absolute;
-  bottom: 120px;
+  bottom: 95px;
   left: 28px;
   right: 28px;
   padding: 6px 8px;
-  background-color: rgba(255, 255, 255, 0.1);
-  border-radius: 4px;
+  background-color: transparent;
+  border-radius: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 40px;
+  height: 38px;
   z-index: 1;
   margin-top: auto;
 }
 
 .barcode-svg {
   width: 100%;
-  height: 35px;
+  height: 34px;
   max-width: 100%;
 }
 
@@ -2494,7 +2480,7 @@ html {
   }
 
   .card-barcode {
-    bottom: 100px;
+    bottom: 95px;
     height: 45px;
   }
 
@@ -2567,7 +2553,7 @@ html {
   }
 
   .card-barcode {
-    bottom: 120px;
+    bottom: 95px;
     height: 50px;
     padding: 8px 10px;
     margin-top: 30px;
@@ -2642,8 +2628,8 @@ html {
   }
 
   .card-barcode {
-    bottom: 80px;
-    height: 30px;
+    bottom: 95px;
+    height: 34px;
     padding: 4px 6px;
   }
 
@@ -2661,6 +2647,19 @@ html {
     box-shadow:
       0 6px 20px rgba(0, 0, 0, 0.12),
       0 2px 6px rgba(0, 0, 0, 0.08);
+  }
+}
+
+/* Overrides spécifiques pour les cartes de profil afin d'uniformiser les barcodes */
+@media (min-width: 1024px) {
+  #profile-membership-cards .barcode-svg {
+    height: 36px;
+  }
+}
+
+@media (max-width: 480px) {
+  #profile-membership-cards .barcode-svg {
+    height: 30px;
   }
 }
 

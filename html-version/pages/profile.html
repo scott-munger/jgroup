@@ -56,7 +56,7 @@
       <div class="feature-cards">
         <div class="membership-cards-stack" id="profile-membership-cards">
           <div class="membership-card gold-card" id="profile-gold-card">
-            <div class="card-type">Gold</div>
+            <div class="card-type">GOLD</div>
             <div class="card-brand">JGroup</div>
             <div class="card-name">Sarah Pierre</div>
             <div class="card-barcode">
@@ -268,32 +268,9 @@
       const svg = document.getElementById(id);
       if (!svg) return;
 
-      const width = 200;
-      const height = 35;
-      svg.setAttribute("width", width);
-      svg.setAttribute("height", height);
-      svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
-
-      let x = 0;
-      const barWidth = 2;
-      const spacing = 1;
-
-      for (let i = 0; i < code.length; i++) {
-        const char = code.charCodeAt(i);
-        const barHeight = height * (0.3 + (char % 70) / 100);
-
-        const rect = document.createElementNS(
-          "http://www.w3.org/2000/svg",
-          "rect",
-        );
-        rect.setAttribute("x", x);
-        rect.setAttribute("y", (height - barHeight) / 2);
-        rect.setAttribute("width", barWidth);
-        rect.setAttribute("height", barHeight);
-        rect.setAttribute("fill", "#ffffff");
-        svg.appendChild(rect);
-
-        x += barWidth + spacing;
+      if (typeof drawBarcode === "function") {
+        // Utilise le même design que dans le mockup de profil
+        drawBarcode(svg, code);
       }
     });
   }
